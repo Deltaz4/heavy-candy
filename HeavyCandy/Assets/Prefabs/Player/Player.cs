@@ -14,7 +14,7 @@ public class Player : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         UpdateCamera();
-
+        UpdateMouse();
     }
 
     void UpdateCamera() {
@@ -32,5 +32,17 @@ public class Player : MonoBehaviour {
             cameraMovement.x += cameraSpeed;
         }
         transform.Translate(cameraMovement);
+    }
+
+    void UpdateMouse() {
+        if (Input.GetMouseButtonDown(0)) {
+            RaycastHit hit;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+            if (Physics.Raycast(ray, out hit)) {
+                Transform hitTransform = hit.transform;
+                hitTransform.Translate(0, -10, 0);
+            }
+        }
     }
 }
