@@ -4,23 +4,24 @@ using UnityEngine;
 
 public class Band : Unit {
 
-    public House house;
-    public GameObject collisionChild;
+    public Transform startingPoint;
 
 	void Awake () {
         base.Initialize();
+
+        // Remove
+        SetDestination(house);
 	}
 
-    public void SetDestination(House house) {
+    public void SetDestination(House house)
+    {
         base.SetDestination(house.transform.position);
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
-    private bool atDestination() {
-        return false;
-    } 
+    void Update () {
+        if (atDestination()) {
+            // Do something! Resets to starting position for now.
+            transform.position = startingPoint.position;
+        }
+	}
 }
