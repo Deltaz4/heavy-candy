@@ -2,15 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Band : MonoBehaviour {
+public class Band : Unit {
 
-	// Use this for initialization
+    public House house;
+    public GameObject collisionChild;
+
 	void Start () {
-		
+        base.Initialize();
 	}
+
+    public void SetDestination(House house) {
+        base.SetDestination(house.transform.position);
+    }
 	
 	// Update is called once per frame
 	void Update () {
 		
 	}
+
+    private bool atDestination() {
+        return false;
+    } 
 }

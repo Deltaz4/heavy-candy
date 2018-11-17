@@ -7,17 +7,14 @@ abstract public class Unit : MonoBehaviour {
 
     NavMeshAgent agent;
 
-	// Use this for initialization
-	void Start () {
+    /// <summary>
+    /// Sets the NavMeshAgent of the implementing class.
+    /// </summary>
+	protected void Initialize () {
         agent = GetComponent<NavMeshAgent>();
 	}
 
     protected void SetDestination(Vector3 destination) {
         agent.destination = destination;
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 }
