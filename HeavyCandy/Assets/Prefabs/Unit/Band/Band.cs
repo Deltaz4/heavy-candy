@@ -7,7 +7,7 @@ public class Band : Unit {
     public House house;
     public GameObject collisionChild;
 
-	void Start () {
+	void Awake () {
         base.Initialize();
 	}
 
