@@ -21,6 +21,11 @@ abstract public class Unit : MonoBehaviour {
         agent.destination = destination;
     }
 
+    public void SetHouse(House house) {
+        this.house = house;
+        SetDestination(house.transform.position);
+    }
+
     protected bool atDestination()
     {
         Vector3 closestSurfacePoint1;
