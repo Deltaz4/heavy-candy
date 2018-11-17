@@ -23,7 +23,8 @@ public class Police : Unit {
     void Update () {
         if (base.house != null && AtDestination()) {
             if (targetGenre == house.genre) {
-                bool candyFound = false; // TODO
+                bool candyFound = house.HasCandy();
+                house.ConfiscateCandy();
                 PoliceStation policeStation = (PoliceStation)transform.parent.GetComponent(typeof(PoliceStation));
                 policeStation.DestinationReached(targetGenre, candyFound);
             }
