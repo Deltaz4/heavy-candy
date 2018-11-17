@@ -2,6 +2,9 @@
 
 public class House : MonoBehaviour {
 
+    public bool hasPerformingBand;
+    public FactionLogic.Genre genre;
+
 	Color colorStart = Color.red;
 	Color colorEnd = Color.green;
 	float colorDuration = 1.0f;
@@ -27,6 +30,8 @@ public class House : MonoBehaviour {
 
 	void Start ()
 	{
+        hasPerformingBand = false;
+
 		colorRend = GetComponent<Renderer>();
 		initialColor = colorRend.material.color;
 		colorSlowDown = vibSlowDown;
@@ -55,6 +60,18 @@ public class House : MonoBehaviour {
 			rippleB.SetActive(false);
 		}
 	}
+
+    public void PlayMusic(FactionLogic.Genre genre) {
+        this.genre = genre;
+        hasPerformingBand = true;
+        shouldVib = true;
+    }
+
+    public void StopMusic() {
+        hasPerformingBand = false;
+        shouldVib = false;
+    }
+
 
 	public void ToggleVib ()
 	{
