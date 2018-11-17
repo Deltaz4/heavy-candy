@@ -22,9 +22,11 @@ public class Police : Unit {
 
     void Update () {
         if (base.house != null && atDestination()) {
-            bool candyFound = false; // TODO
-            PoliceStation policeStation = (PoliceStation) transform.parent.GetComponent(typeof(PoliceStation));
-            policeStation.DestinationReached(targetGenre, candyFound);
+            if (targetGenre == house.genre) {
+                bool candyFound = false; // TODO
+                PoliceStation policeStation = (PoliceStation)transform.parent.GetComponent(typeof(PoliceStation));
+                policeStation.DestinationReached(targetGenre, candyFound);
+            }
             Destroy(gameObject);
         }
     }
