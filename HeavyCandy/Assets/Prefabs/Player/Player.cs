@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour {
 
-    private List<Band> bands;
+    private Dictionary<int, Band> bands = new Dictionary<int, Band>();
     private Band selected;
     public Headquarters hq;
 
@@ -17,11 +17,17 @@ public class Player : MonoBehaviour {
     // Use this for initialization
     void Start() {
         CreateInitialBands();
+        Debug.Log(bands);
 
     }
 
     void CreateInitialBands() {
-        //TODO: Implement once Band prefab is ready.
+        Vector3 spawnLocation = hq.transform.position;
+        for(int i = 1; i <= startingBands; ++i) {
+            GameObject newBand = Instantiate(bandPrefab, spawnLocation - 10 * Vector3.right, Quaternion.identity);
+            bands.Add(i, newBand.GetComponent<Band>());
+            newBand.SetActive(false);
+        }
     }
 
     // Update is called once per frame
@@ -49,46 +55,53 @@ public class Player : MonoBehaviour {
     }
 
     void UpdateMouse() {
-        if (Input.GetMouseButtonDown(0)) {
+        if (Input.GetMouseButtonDown(1)) {
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            Debug.Log("Right click!");
 
             if (Physics.Raycast(ray, out hit)) {
-                Transform hitTransform = hit.transform;
-                hitTransform.Translate(0, -10, 0);
+                Debug.Log("There was a hit!");
+                House target = hit.transform.gameObject.GetComponent<House>();
+                Debug.Log("selected: " + selected + ", target: " + target);
+                if (selected && target) {
+                    selected.gameObject.SetActive(true);
+                    selected.SetDestination(target);
+                }
             }
         }
     }
 
     void UpdateSelection() {
-        if (bands[1] && Input.GetKeyDown(KeyCode.Alpha1)) {
+        if (bands.ContainsKey(1) && Input.GetKeyDown(KeyCode.Alpha1)) {
+            Debug.Log("Selected 1");
             selected = bands[1];
         }
-        if (bands[2] && Input.GetKeyDown(KeyCode.Alpha2)) {
+        if (bands.ContainsKey(2) && Input.GetKeyDown(KeyCode.Alpha2)) {
             selected = bands[2];
         }
-        if (bands[3] && Input.GetKeyDown(KeyCode.Alpha3)) {
+        if (bands.ContainsKey(3) && Input.GetKeyDown(KeyCode.Alpha3)) {
             selected = bands[3];
         }
-        if (bands[4] && Input.GetKeyDown(KeyCode.Alpha4)) {
+        if (bands.ContainsKey(4) && Input.GetKeyDown(KeyCode.Alpha4)) {
             selected = bands[4];
         }
-        if (bands[5] && Input.GetKeyDown(KeyCode.Alpha5)) {
+        if (bands.ContainsKey(5) && Input.GetKeyDown(KeyCode.Alpha5)) {
             selected = bands[5];
         }
-        if (bands[6] && Input.GetKeyDown(KeyCode.Alpha6)) {
+        if (bands.ContainsKey(6) && Input.GetKeyDown(KeyCode.Alpha6)) {
             selected = bands[6];
         }
-        if (bands[7] && Input.GetKeyDown(KeyCode.Alpha7)) {
+        if (bands.ContainsKey(7) && Input.GetKeyDown(KeyCode.Alpha7)) {
             selected = bands[7];
         }
-        if (bands[8] && Input.GetKeyDown(KeyCode.Alpha8)) {
+        if (bands.ContainsKey(8) && Input.GetKeyDown(KeyCode.Alpha8)) {
             selected = bands[8];
         }
-        if (bands[9] && Input.GetKeyDown(KeyCode.Alpha9)) {
+        if (bands.ContainsKey(9) && Input.GetKeyDown(KeyCode.Alpha9)) {
             selected = bands[9];
         }
-        if (bands[0] && Input.GetKeyDown(KeyCode.Alpha0)) {
+        if (bands.ContainsKey(0) && Input.GetKeyDown(KeyCode.Alpha0)) {
             selected = bands[0];
         }
     }

@@ -6,18 +6,30 @@ using UnityEngine.AI;
 abstract public class Unit : MonoBehaviour {
 
     NavMeshAgent agent;
+    public Collider collisionGameObject;
+    public House house;
+    public float destinationHitRadius;
 
-	// Use this for initialization
-	void Start () {
+    /// <summary>
+    /// Sets the NavMeshAgent of the implementing class.
+    /// </summary>
+	protected void Initialize () {
         agent = GetComponent<NavMeshAgent>();
 	}
 
     protected void SetDestination(Vector3 destination) {
         agent.destination = destination;
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+
+    protected bool atDestination()
+    {
+        Vector3 closestSurfacePoint1;
+        Vector3 closestSurfacePoint2;
+
+        closestSurfacePoint1 = collisionGameObject.ClosestPointOnBounds(house.transform.position);
+        closestSurfacePoint2 = house.GetComponent<Collider>().ClosestPointOnBounds(transform.position);
+
+        float surfaceDistance = Vector3.Distance(closestSurfacePoint1, closestSurfacePoint2);
+        return (surfaceDistance < destinationHitRadius);
+    }
 }
