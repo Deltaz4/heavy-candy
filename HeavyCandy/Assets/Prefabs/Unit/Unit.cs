@@ -6,8 +6,8 @@ using UnityEngine.AI;
 abstract public class Unit : MonoBehaviour {
 
     NavMeshAgent agent;
-    public Collider collisionGameObject;
-    public House house;
+    private Collider collisionGameObject;
+    protected House house;
     public float destinationHitRadius;
 
     /// <summary>
@@ -21,8 +21,7 @@ abstract public class Unit : MonoBehaviour {
         agent.destination = destination;
     }
 
-    protected bool atDestination()
-    {
+    protected bool AtDestination() {
         Vector3 closestSurfacePoint1;
         Vector3 closestSurfacePoint2;
 

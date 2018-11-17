@@ -4,13 +4,10 @@ using UnityEngine;
 
 public class Band : Unit {
 
-    public Transform startingPoint;
+    private bool playing = false;
 
 	void Awake () {
         base.Initialize();
-
-        // Remove
-        SetDestination(house);
 	}
 
     public void SetDestination(House house)
@@ -19,9 +16,10 @@ public class Band : Unit {
     }
 
     void Update () {
-        if (atDestination()) {
-            // Do something! Resets to starting position for now.
-            transform.position = startingPoint.position;
+        if (AtDestination()) {
+            playing = true;
+            //Activate house animation
+
         }
 	}
 }
