@@ -5,8 +5,7 @@ using UnityEngine.Events;
 
 public class PoliceController : MonoBehaviour {
 
-    private UnityAction policeReachedDestination;
-
+    public HouseController houseController;
     public PoliceStation policeStation;
     FactionLogic factionLogic;
     public float policeSpawnInterval;
@@ -19,9 +18,17 @@ public class PoliceController : MonoBehaviour {
 
     void Update () {
         timeSinceLastSpawn += Time.deltaTime;
-        if (timeSinceLastSpawn > policeSpawnInterval)
-        {
-            policeStation.DeployPoliceSquad(PickGenre());
+        if (timeSinceLastSpawn > policeSpawnInterval) {
+            FactionLogic.Genre targetGenre = PickGenre();
+            House targetHouse = PickHouse(targetGenre);
+
+            Debug.Log(string.Format("Genre: {0}, House: {1}", targetGenre, targetHouse));
+
+            if (targetHouse != null) { 
+                // Problematic if no houses are partying with the picked genre
+                // Can be solved by adjusting the PickGenre() method.
+                policeStation.DeployPoliceSquad(targetGenre, targetHouse);
+            } 
             timeSinceLastSpawn -= policeSpawnInterval;
         }
     }
@@ -33,8 +40,7 @@ public class PoliceController : MonoBehaviour {
         float rangeStart = 0.0f;
         float rangeEnd = 0.0f;
 
-        foreach (KeyValuePair<FactionLogic.Genre, float> entry in probabilities)
-        {
+        foreach (KeyValuePair<FactionLogic.Genre, float> entry in probabilities) {
             rangeEnd += entry.Value;
 
             if (randomValue > rangeStart && randomValue < rangeEnd) {
@@ -45,6 +51,17 @@ public class PoliceController : MonoBehaviour {
 
         Debug.LogError("PickGenre failed to calculate a genre to pick!");
         return FactionLogic.Genre.METAL;
+    }
+
+    private House PickHouse(FactionLogic.Genre genre) {
+        List<House> houses = houseController.GetPartyingHousesByGenre(genre);
+        if (houses.Count == 0)
+            return null;
+
+        System.Random random = new System.Random();
+        int r = random.Next(houses.Count);
+
+        return houses[r];
     }
 
     public void DestinationReached(FactionLogic.Genre genre, bool foundCandy) {

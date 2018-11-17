@@ -6,7 +6,7 @@ using UnityEngine.AI;
 abstract public class Unit : MonoBehaviour {
 
     NavMeshAgent agent;
-    private Collider collisionGameObject;
+    public Collider collisionGameObject;
     protected House house;
     public float destinationHitRadius;
 
@@ -15,7 +15,8 @@ abstract public class Unit : MonoBehaviour {
     /// </summary>
 	protected void Initialize () {
         agent = GetComponent<NavMeshAgent>();
-	}
+        SetDestination(house.transform.position);
+    }
 
     protected void SetDestination(Vector3 destination) {
         agent.destination = destination;
@@ -23,7 +24,6 @@ abstract public class Unit : MonoBehaviour {
     
     public void SetHouse(House house) {
         this.house = house;
-        SetDestination(house.transform.position);
     }
 
     protected bool AtDestination() {

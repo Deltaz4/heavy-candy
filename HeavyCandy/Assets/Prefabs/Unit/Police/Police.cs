@@ -4,11 +4,9 @@ using UnityEngine;
 
 public class Police : Unit {
 
-    public Transform startingPoint;
-
     FactionLogic.Genre targetGenre;
 
-    void Awake () {
+    void Start() {
         base.Initialize();
     }
 
