@@ -25,15 +25,23 @@ abstract public class Unit : MonoBehaviour {
         this.house = house;
         SetDestination(house.transform.position);
     }
-    
+
     protected bool AtDestination() {
-        Vector3 closestSurfacePoint1;
-        Vector3 closestSurfacePoint2;
+        if (house != null) { // If the unit is navigating to a house
+            Vector3 closestSurfacePoint1;
+            Vector3 closestSurfacePoint2;
 
-        closestSurfacePoint1 = collisionGameObject.ClosestPointOnBounds(house.transform.position);
-        closestSurfacePoint2 = house.GetComponent<Collider>().ClosestPointOnBounds(transform.position);
+            closestSurfacePoint1 = collisionGameObject.ClosestPointOnBounds(house.transform.position);
+            closestSurfacePoint2 = house.GetComponent<Collider>().ClosestPointOnBounds(transform.position);
 
-        float surfaceDistance = Vector3.Distance(closestSurfacePoint1, closestSurfacePoint2);
-        return (surfaceDistance < destinationHitRadius);
+            float surfaceDistance = Vector3.Distance(closestSurfacePoint1, closestSurfacePoint2);
+            return (surfaceDistance < destinationHitRadius);
+        }
+        else if (agent.destination != null){ // If the unit is aimlessly wandering around
+            return (Vector3.Distance(agent.destination, transform.position) < destinationHitRadius);
+        }
+
+        // If no house or destination is set; the Unit is considered to be at their destination
+        return true;
     }
 }

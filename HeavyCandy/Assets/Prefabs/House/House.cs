@@ -13,14 +13,11 @@ public class House : MonoBehaviour {
 	Color initialColor;
 	float initialColorDuration;
 
-	[HideInInspector]
-	public GameObject rippleA;
-	[HideInInspector]
-	public GameObject rippleB;
+	private GameObject rippleA;
+	private GameObject rippleB;
 
 	public float vibPower = 0.7f; // Power of vibration
 	public float vibDuration = 1.0f; // Duration of vibration
-	public Transform house;
 	public float vibSlowDown = 1.0f; // Set to 1 vibrate vibDuration seconds. Set to 0 to never stop vibrating
 	[SerializeField]
 	private bool shouldVib = false; // Should it vibrate
@@ -32,13 +29,16 @@ public class House : MonoBehaviour {
 	{
         hasPerformingBand = false;
 
-		colorRend = GetComponent<Renderer>();
+        rippleA = (GameObject)transform.Find("RippleA").gameObject;
+        rippleB = (GameObject)transform.Find("RippleB").gameObject;
+
+        colorRend = GetComponent<Renderer>();
 		initialColor = colorRend.material.color;
 		colorSlowDown = vibSlowDown;
 		colorDuration = vibDuration;
 		initialColorDuration = colorDuration;
 
-		initialPosition = house.localPosition;
+		initialPosition = transform.localPosition;
 		initialVibDuration = vibDuration;
 	}
 
@@ -102,14 +102,14 @@ public class House : MonoBehaviour {
 
 			if (vibDuration > 0)
 			{
-				house.localPosition = initialPosition + Random.insideUnitSphere * vibPower;
+                transform.localPosition = initialPosition + Random.insideUnitSphere * vibPower;
 				vibDuration -= Time.deltaTime * vibSlowDown;
 			}
 			else
 			{
 				shouldVib = false;
 				vibDuration = initialVibDuration;
-				house.localPosition = initialPosition;
+                transform.localPosition = initialPosition;
 			}
 		}
 	}
