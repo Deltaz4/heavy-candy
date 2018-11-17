@@ -4,6 +4,7 @@ public class House : MonoBehaviour {
 
     public bool hasPerformingBand;
     public FactionLogic.Genre genre;
+    int candyCount;
 
 	Color colorStart = Color.red;
 	Color colorEnd = Color.green;
@@ -28,6 +29,7 @@ public class House : MonoBehaviour {
 	void Start ()
 	{
         hasPerformingBand = false;
+        candyCount = 0;
 
         rippleA = (GameObject)transform.Find("RippleA").gameObject;
         rippleB = (GameObject)transform.Find("RippleB").gameObject;
@@ -72,6 +74,21 @@ public class House : MonoBehaviour {
         shouldVib = false;
     }
 
+    public void IncreaseCandyCount(int amount = 1) {
+        candyCount += amount;
+    }
+
+    public void DecreaseCandyCount(int amount = 1) {
+        candyCount -= amount;
+    }
+
+    public bool HasCandy() {
+        return (candyCount != 0);
+    }
+
+    public void ConfiscateCandy() {
+        candyCount = 0;
+    }
 
 	public void ToggleVib ()
 	{
