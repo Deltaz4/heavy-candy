@@ -7,7 +7,6 @@ public class PoliceStation : MonoBehaviour {
     public Police police;
     public PoliceController policeController;
     public Transform policeSpawnPoint;
-    public House REMOVE_THIS_VARIABLE;
 
 	// Use this for initialization
 	void Start () {
@@ -25,7 +24,8 @@ public class PoliceStation : MonoBehaviour {
             policeSpawnPoint.position, 
             policeSpawnPoint.rotation);
 
-        deployedSquad.SetHouse(REMOVE_THIS_VARIABLE);
+        // deployedSquad.SetHouse(); TODO implement choice of house
+        // deployedSquad.SetDestination(); TODO ..or a destination for it to patrol!
         deployedSquad.transform.parent = gameObject.transform;
         police.setTargetGenre(genre);
     }
