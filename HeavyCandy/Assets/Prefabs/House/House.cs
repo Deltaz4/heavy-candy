@@ -2,6 +2,10 @@
 
 public class House : MonoBehaviour {
 
+    public bool hasPerformingBand;
+    public FactionLogic.Genre genre;
+    int candyCount;
+
 	Color colorStart = Color.red;
 	Color colorEnd = Color.green;
 	float colorDuration = 1.0f;
@@ -10,14 +14,11 @@ public class House : MonoBehaviour {
 	Color initialColor;
 	float initialColorDuration;
 
-	[HideInInspector]
-	public GameObject rippleA;
-	[HideInInspector]
-	public GameObject rippleB;
+	private GameObject rippleA;
+	private GameObject rippleB;
 
 	public float vibPower = 0.7f; // Power of vibration
 	public float vibDuration = 1.0f; // Duration of vibration
-	public Transform house;
 	public float vibSlowDown = 1.0f; // Set to 1 vibrate vibDuration seconds. Set to 0 to never stop vibrating
 	[SerializeField]
 	private bool shouldVib = false; // Should it vibrate
@@ -27,13 +28,19 @@ public class House : MonoBehaviour {
 
 	void Start ()
 	{
-		colorRend = GetComponent<Renderer>();
+        hasPerformingBand = false;
+        candyCount = 0;
+
+        rippleA = (GameObject)transform.Find("RippleA").gameObject;
+        rippleB = (GameObject)transform.Find("RippleB").gameObject;
+
+        colorRend = GetComponent<Renderer>();
 		initialColor = colorRend.material.color;
 		colorSlowDown = vibSlowDown;
 		colorDuration = vibDuration;
 		initialColorDuration = colorDuration;
 
-		initialPosition = house.localPosition;
+		initialPosition = transform.localPosition;
 		initialVibDuration = vibDuration;
 	}
 
@@ -55,6 +62,33 @@ public class House : MonoBehaviour {
 			rippleB.SetActive(false);
 		}
 	}
+
+    public void PlayMusic(FactionLogic.Genre genre) {
+        this.genre = genre;
+        hasPerformingBand = true;
+        shouldVib = true;
+    }
+
+    public void StopMusic() {
+        hasPerformingBand = false;
+        shouldVib = false;
+    }
+
+    public void IncreaseCandyCount(int amount = 1) {
+        candyCount += amount;
+    }
+
+    public void DecreaseCandyCount(int amount = 1) {
+        candyCount -= amount;
+    }
+
+    public bool HasCandy() {
+        return (candyCount != 0);
+    }
+
+    public void ConfiscateCandy() {
+        candyCount = 0;
+    }
 
 	public void ToggleVib ()
 	{
@@ -85,14 +119,14 @@ public class House : MonoBehaviour {
 
 			if (vibDuration > 0)
 			{
-				house.localPosition = initialPosition + Random.insideUnitSphere * vibPower;
+                transform.localPosition = initialPosition + Random.insideUnitSphere * vibPower;
 				vibDuration -= Time.deltaTime * vibSlowDown;
 			}
 			else
 			{
 				shouldVib = false;
 				vibDuration = initialVibDuration;
-				house.localPosition = initialPosition;
+                transform.localPosition = initialPosition;
 			}
 		}
 	}

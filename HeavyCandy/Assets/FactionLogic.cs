@@ -5,23 +5,26 @@ using UnityEngine;
 
 
 public class FactionLogic : MonoBehaviour {
-    public int attractionStartValue;
-    public int attractionMaxValue;
-    public int attractionMinValue;
+    int attractionStartValue = 50;
+    int attractionMaxValue = 100;
+    int attractionMinValue = 0;
 
     public enum Genre {OPERA, METAL, HIP_HOP};
     Dictionary<Genre, int> factionAttractions;
 
-	// Use this for initialization
-	void Start () {
+    public FactionLogic() {
         // Initizlize dictionary containing an attraction for each Genre
         factionAttractions = new Dictionary<Genre, int>();
-        foreach (Genre genre in System.Enum.GetValues(typeof(Genre))) {
+        foreach (Genre genre in System.Enum.GetValues(typeof(Genre)))
+        {
             factionAttractions.Add(genre, attractionStartValue);
         }
+    }
+
+	void Start () {
+        
 	}
 	
-	// Update is called once per frame
 	void Update () {
 		
 	}
@@ -52,9 +55,9 @@ public class FactionLogic : MonoBehaviour {
     /// </summary>
     /// <returns>A Dictionary containing the probabilities (percentage of total attraction)
     /// for each genre. Values for each Key range between 0 to 1. </returns>
-    public Dictionary<Genre, double> GetProbabilities() {
+    public Dictionary<Genre, float> GetProbabilities() {
         int totalAttraction = 0; // Sum of attraction for all genres
-        Dictionary<Genre, double> probabilities = new Dictionary<Genre, double>();
+        Dictionary<Genre, float> probabilities = new Dictionary<Genre, float>();
 
         // Get total attraction i for-each below
         foreach (Genre g in System.Enum.GetValues(typeof(Genre)))
@@ -65,7 +68,7 @@ public class FactionLogic : MonoBehaviour {
 
             if (successfulRetreival) {
                 totalAttraction += retreivedAttraction;
-                probabilities.Add(g, 0.0);
+                probabilities.Add(g, 0.0f);
             }
             else {
                 Debug.LogError("Failed to retreive a value for " + g);
@@ -77,7 +80,7 @@ public class FactionLogic : MonoBehaviour {
             int retreivedAttraction;
             factionAttractions.TryGetValue(g, out retreivedAttraction);
 
-            probabilities[g] = (((double)retreivedAttraction) / ((double)totalAttraction));
+            probabilities[g] = (((float)retreivedAttraction) / ((float)totalAttraction));
         }
 
         return probabilities;
@@ -91,37 +94,5 @@ public class FactionLogic : MonoBehaviour {
             return attractionMinValue;
 
         return attraction;
-    }
-
-    // Ugly tests below
-    private void Test()
-    {
-        factionAttractions[Genre.OPERA] = 50;
-        factionAttractions[Genre.METAL] = 20;
-        factionAttractions[Genre.HIP_HOP] = 80;
-
-        Dictionary<Genre, double> probabilities = GetProbabilities();
-
-        Debug.Log(string.Format("Opera: {0}", probabilities[Genre.OPERA]), gameObject);
-        Debug.Log(string.Format("Metal: {0}", probabilities[Genre.METAL]), gameObject);
-        Debug.Log(string.Format("Hip hop: {0}", probabilities[Genre.HIP_HOP]), gameObject);
-
-        Debug.Log(string.Format("Opera: {0}", factionAttractions[Genre.OPERA]), gameObject);
-        increaseAttraction(Genre.OPERA);
-
-        Debug.Log(string.Format("Opera: {0}", factionAttractions[Genre.OPERA]), gameObject);
-        increaseAttraction(Genre.OPERA, 1000);
-
-        Debug.Log(string.Format("Opera: {0}", factionAttractions[Genre.OPERA]), gameObject);
-        decreaseAttraction(Genre.OPERA, 1000);
-
-        Debug.Log(string.Format("Opera: {0}", factionAttractions[Genre.OPERA]), gameObject);
-
-        Debug.Log(string.Format("Metal: {0}", factionAttractions[Genre.METAL]), gameObject);
-        increaseAttraction(Genre.METAL, 1000);
-
-        Debug.Log(string.Format("Metal: {0}", factionAttractions[Genre.METAL]), gameObject);
-        decreaseAttraction(Genre.METAL, 1000);
-        Debug.Log(string.Format("Metal: {0}", factionAttractions[Genre.METAL]), gameObject);
     }
 }
