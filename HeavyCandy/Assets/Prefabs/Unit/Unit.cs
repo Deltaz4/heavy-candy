@@ -20,7 +20,12 @@ abstract public class Unit : MonoBehaviour {
     protected void SetDestination(Vector3 destination) {
         agent.destination = destination;
     }
-
+    
+    public void SetHouse(House house) {
+        this.house = house;
+        SetDestination(house.transform.position);
+    }
+    
     protected bool AtDestination() {
         Vector3 closestSurfacePoint1;
         Vector3 closestSurfacePoint2;
