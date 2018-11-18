@@ -6,16 +6,8 @@ public class Police : Unit {
 
     FactionLogic.Genre targetGenre;
 
-    void Start() {
-        base.Initialize();
-    }
-
     public void setTargetGenre(FactionLogic.Genre genre) {
         targetGenre = genre;
-    }
-
-    public void addPoliceStationDelegate() {
-
     }
 
     void Update () {

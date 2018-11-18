@@ -6,10 +6,6 @@ public class Band : Unit {
 
     private bool playing = false;
 
-	void Awake () {
-        base.Initialize();
-	}
-
     public void SetDestination(House house)
     {
         base.SetDestination(house.transform.position);
