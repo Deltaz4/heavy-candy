@@ -23,7 +23,6 @@ public class UnitSprite : MonoBehaviour {
 
     public void SetRotation(float rotation)
     {
-        Debug.Log(rotation);
         if (rotation < 45.0f) {
             spriteRenderer.sprite = backLeft;
         }

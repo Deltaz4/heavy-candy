@@ -204,7 +204,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   houseController: {fileID: 730284219}
   policeStation: {fileID: 1538723114}
-  policeSpawnInterval: 1
+  policeSpawnInterval: 0
 --- !u!4 &57194247
 Transform:
   m_ObjectHideFlags: 0
@@ -680,11 +680,6 @@ Prefab:
     - target: {fileID: 4370541741860342, guid: 6e1ff129978741f4aabd28ac43156266, type: 2}
       propertyPath: m_RootOrder
       value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 195425785078253506, guid: 6e1ff129978741f4aabd28ac43156266,
-        type: 2}
-      propertyPath: m_AngularSpeed
-      value: 200
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6e1ff129978741f4aabd28ac43156266, type: 2}

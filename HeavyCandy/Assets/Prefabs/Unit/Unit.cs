@@ -18,7 +18,6 @@ abstract public class Unit : MonoBehaviour {
     }
 
     protected void SetDestination(Vector3 destination) {
-        Debug.Log(destination);
         agent.destination = destination;
     }
     
