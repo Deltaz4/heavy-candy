@@ -13,6 +13,7 @@ public class Player : MonoBehaviour {
 
     private List<Button> selectionButtons = new List<Button>();
 
+    public int candySellingPrice = 10;
     public float cameraSpeed = 4;
     private int startingBands = 9;
     public int capacityOfDeliverer = 10; // Amount of candy the CandyDelivery will send
@@ -30,15 +31,20 @@ public class Player : MonoBehaviour {
 
     void CreateInitialBands() {
         Vector3 spawnLocation = hq.transform.position;
-        for(int i = 1; i <= startingBands; ++i) {
+        for (int i = 1; i <= startingBands; ++i) {
             GameObject newBand = Instantiate(bandPrefab, spawnLocation - 10 * Vector3.right, Quaternion.identity);
             bands.Add(i, newBand.GetComponent<Band>());
-            if(i <= 3) {
-                //newBand.genre = FactionLogic.Genre.HIP_HOP;
+            if (i <= 3) {
+                newBand.GetComponent<Band>().SetGenre(FactionLogic.Genre.HIP_HOP);
+            } else if (i >= 4 && i <= 6) {
+                newBand.GetComponent<Band>().SetGenre(FactionLogic.Genre.METAL);
+            } else {
+                newBand.GetComponent<Band>().SetGenre(FactionLogic.Genre.OPERA);
             }
             newBand.SetActive(false);
         }
     }
+
 
     void BindSelectionButtons() {
         for (int i = 1; i <= 9; ++i) {
@@ -50,7 +56,6 @@ public class Player : MonoBehaviour {
     }
 
     void ChangeSelection(int bandNumber) {
-        Debug.Log("Button pressed");
         selectedBand = bands[bandNumber];
     }
 

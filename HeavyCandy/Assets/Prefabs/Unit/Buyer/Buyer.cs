@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class BuyerScript : MonoBehaviour {
+public class Buyer : Unit {
 
 	public float walkSpeed = 5.0f;
 	public float walkDuration;
@@ -11,6 +11,8 @@ public class BuyerScript : MonoBehaviour {
 	[SerializeField]
 	bool shouldWalkRandom;
 
+    Player player;
+
     private GameObject sprite;
 
     void Start ()
@@ -20,11 +22,32 @@ public class BuyerScript : MonoBehaviour {
 		walkDuration = Random.Range(1, 6);
 		shouldWalkRandom = true;
         sprite = transform.Find("Sprite").gameObject;
+        player = GameObject.Find("Player").GetComponent<Player>();
     }
 	
 	void Update ()
 	{
 		WalkRandom();
+
+        if (!shouldWalkRandom && base.house != null && AtDestination())
+        {
+            bool candyFound = house.HasCandy();
+            house.DecreaseCandyCount(1);
+            player.money += player.candySellingPrice;
+            HouseController houseController = (HouseController)transform.parent.GetComponent(typeof(HouseController));
+            houseController.DestinationReached(this);
+            Destroy(gameObject);
+        }
+    }
+
+    public bool IsWalkingRandomly() {
+        return shouldWalkRandom;
+    }
+
+    override public void SetHouse(House house)
+    {
+        base.SetHouse(house);
+        shouldWalkRandom = false;
     }
 
     private void LateUpdate()
@@ -49,12 +72,10 @@ public class BuyerScript : MonoBehaviour {
 			}
 			else if (walkDuration <= 0)
 			{
-				shouldWalkRandom = false;
 				walkRandomX = Random.Range(-1, 2);
 				walkRandomZ = Random.Range(-1, 2);
 				SetWalkDuration();
 			}
-			shouldWalkRandom = true;
 		}
 	}
 }

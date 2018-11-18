@@ -31,28 +31,30 @@ public class Band : Unit {
         base.Awake();
         sprite = transform.Find("Sprite").gameObject;
         unitSprite = sprite.GetComponent<UnitSprite>();
-        genre = RandomizeGenre();
+    }
+
+    private void Start() {
         if (genre == FactionLogic.Genre.OPERA) {
             unitSprite.backLeft = operaBackLeft;
             unitSprite.backRight = operaBackRight;
             unitSprite.frontLeft = operaFrontLeft;
             unitSprite.frontRight = operaFrontRight;
-        }
-        else if (genre == FactionLogic.Genre.METAL) {
+        } else if (genre == FactionLogic.Genre.METAL) {
             unitSprite.backLeft = metalBackLeft;
             unitSprite.backRight = metalBackRight;
             unitSprite.frontLeft = metalFrontLeft;
             unitSprite.frontRight = metalFrontRight;
-        }
-        else if (genre == FactionLogic.Genre.HIP_HOP) {
+        } else if (genre == FactionLogic.Genre.HIP_HOP) {
             unitSprite.backLeft = hiphopBackLeft;
             unitSprite.backRight = hiphopBackRight;
             unitSprite.frontLeft = hiphopFrontLeft;
             unitSprite.frontRight = hiphopFrontRight;
         }
-        else {
-            Debug.LogError("Band: Invalid genre");
-        }
+    }
+
+    public void SetGenre(FactionLogic.Genre genre) {
+        this.genre = genre;
+        
     }
 
     public void SetDestination(House house)
