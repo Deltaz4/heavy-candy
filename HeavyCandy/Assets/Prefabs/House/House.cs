@@ -32,6 +32,8 @@ public class House : MonoBehaviour {
 
         rippleA = (GameObject)transform.Find("RippleA").gameObject;
         rippleB = (GameObject)transform.Find("RippleB").gameObject;
+        rippleA.SetActive(false);
+        rippleB.SetActive(false);
 
         colorRend = GetComponent<Renderer>();
 		initialColor = colorRend.material.color;

@@ -65,10 +65,6 @@ public class Band : Unit {
             StartPlaying();
         }
 	}
-    
-    private void LateUpdate() {
-        sprite.transform.forward = Camera.main.transform.forward;
-    }
 
     void StartPlaying() {
         playing = true;
