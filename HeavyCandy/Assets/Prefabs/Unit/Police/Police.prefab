@@ -126,8 +126,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e758cfa242295545b07e3f830bfeb35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  destinationHitRadius: 0
-  startingPoint: {fileID: 0}
+  collisionGameObject: {fileID: 136082596589879962}
+  destinationHitRadius: 4.5
 --- !u!136 &136082596589879962
 CapsuleCollider:
   m_ObjectHideFlags: 1

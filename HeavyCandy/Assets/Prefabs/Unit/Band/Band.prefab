@@ -45,7 +45,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1988936766039144
 GameObject:
   m_ObjectHideFlags: 0
@@ -172,7 +172,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 551e05810ebb9a940ac1a35f32c2c6e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  destinationHitRadius: 0
+  collisionGameObject: {fileID: 136826861791246008}
+  destinationHitRadius: 5.5
+  operaBackLeft: {fileID: 21300000, guid: c853f742cc2bed84f961f30e41b0b593, type: 3}
+  operaBackRight: {fileID: 21300000, guid: e1def4f4ce6b2a74188f50f38985af00, type: 3}
+  operaFrontLeft: {fileID: 21300000, guid: 7274c48232f28e9419344a4cc76cac32, type: 3}
+  operaFrontRight: {fileID: 21300000, guid: 015dae3d132994e419eb0b97f0a09701, type: 3}
+  metalBackLeft: {fileID: 21300000, guid: 6b471e1c13341ea4db42592fa5fa52b2, type: 3}
+  metalBackRight: {fileID: 21300000, guid: c93687f2704af06498aaa6edd2b7ea55, type: 3}
+  metalFrontLeft: {fileID: 21300000, guid: 71f50fc819d03d644b5cef03a320940c, type: 3}
+  metalFrontRight: {fileID: 21300000, guid: 62f3a629d12c07c45a95112dcf03da34, type: 3}
+  hiphopBackLeft: {fileID: 21300000, guid: 2bce14748da592d4cb92b92536f02c3e, type: 3}
+  hiphopBackRight: {fileID: 21300000, guid: c949f5c6349f35041931012c1ab20c06, type: 3}
+  hiphopFrontLeft: {fileID: 21300000, guid: d0ab8ce06e386bd4a9cbba71016380e8, type: 3}
+  hiphopFrontRight: {fileID: 21300000, guid: 873d858292d679d44abb9857be1ffe5e, type: 3}
 --- !u!136 &136826861791246008
 CapsuleCollider:
   m_ObjectHideFlags: 1
