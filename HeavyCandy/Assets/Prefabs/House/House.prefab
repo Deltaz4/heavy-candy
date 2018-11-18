@@ -84,8 +84,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1714713331272350}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 20, y: 0, z: 20}
-  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_LocalPosition: {x: 0, y: -4.5, z: 0}
+  m_LocalScale: {x: 10, y: 1, z: 10}
   m_Children:
   - {fileID: 4497415512825198}
   - {fileID: 4450805722334862}
@@ -176,6 +176,8 @@ MonoBehaviour:
   vibDuration: 1
   vibSlowDown: 1
   shouldVib: 0
+  setupTime: 5
+  riseHeight: 9
 --- !u!198 &198357459436393786
 ParticleSystem:
   m_ObjectHideFlags: 1
