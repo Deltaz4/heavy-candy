@@ -149,6 +149,8 @@ public class House : MonoBehaviour {
         {
             isTearingDown = true;
         }
+
+		audio.Stop();
     }
 
     public void IncreaseCandyCount(int amount = 1) {
