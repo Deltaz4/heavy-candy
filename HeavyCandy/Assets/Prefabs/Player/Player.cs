@@ -13,6 +13,7 @@ public class Player : MonoBehaviour {
 
     private List<Button> selectionButtons = new List<Button>();
 
+    public int candySellingPrice = 10;
     public float cameraSpeed = 4;
     private int startingBands = 9;
     public int capacityOfDeliverer = 10; // Amount of candy the CandyDelivery will send
