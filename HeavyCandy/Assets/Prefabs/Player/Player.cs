@@ -1,16 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour {
 
     private Dictionary<int, Band> bands = new Dictionary<int, Band>();
+
     private Band selectedBand;
     private bool candyDeliverySelected;
     public Headquarters hq;
 
+    private List<Button> selectionButtons = new List<Button>();
+
     public float cameraSpeed = 4;
-    public int startingBands = 3;
+    private int startingBands = 9;
     public int capacityOfDeliverer = 10; // Amount of candy the CandyDelivery will send
     public GameObject bandPrefab;
     public GameObject candyDelivererPrefab;
@@ -20,6 +24,7 @@ public class Player : MonoBehaviour {
     // Use this for initialization
     void Start() {
         CreateInitialBands();
+        BindSelectionButtons();
         candyDeliverySelected = false;
     }
 
@@ -28,8 +33,25 @@ public class Player : MonoBehaviour {
         for(int i = 1; i <= startingBands; ++i) {
             GameObject newBand = Instantiate(bandPrefab, spawnLocation - 10 * Vector3.right, Quaternion.identity);
             bands.Add(i, newBand.GetComponent<Band>());
+            if(i <= 3) {
+                //newBand.genre = FactionLogic.Genre.HIP_HOP;
+            }
             newBand.SetActive(false);
         }
+    }
+
+    void BindSelectionButtons() {
+        for (int i = 1; i <= 9; ++i) {
+            Button button = transform.Find("Canvas/ActionButtons/Selection" + i).GetComponent<Button>();
+            button.GetComponentInChildren<Text>().text = i.ToString();
+            button.onClick.AddListener(() => ChangeSelection(i));
+            selectionButtons.Add(button);
+        }
+    }
+
+    void ChangeSelection(int bandNumber) {
+        Debug.Log("Button pressed");
+        selectedBand = bands[bandNumber];
     }
 
     // Update is called once per frame
@@ -73,8 +95,12 @@ public class Player : MonoBehaviour {
                     deployedDeliverer.SetCandyCount(capacityOfDeliverer);
                 }
                 else if (selectedBand && target && !target.hasPerformingBand) {
-                    selectedBand.gameObject.SetActive(true);
-                    selectedBand.StopPlaying();
+                    if (!selectedBand.playing) {
+                        selectedBand.gameObject.SetActive(true);
+                    }
+                    if (selectedBand.playing) {
+                        selectedBand.house.StopMusic();
+                    }
                     selectedBand.SetHouse(target);
                 }
             }
