@@ -55,6 +55,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4614967102616106}
   - component: {fileID: 195082579872010174}
+  - component: {fileID: 114437792609096334}
   m_Layer: 0
   m_Name: Buyer
   m_TagString: Untagged
@@ -145,6 +146,24 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1371316843334108}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &114437792609096334
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1558889200865974}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 366fd45976d139d4ea49898605815aa8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collisionGameObject: {fileID: 136374750891776582}
+  house: {fileID: 0}
+  destinationHitRadius: 5
+  walkSpeed: 5
+  walkDuration: 0
+  walkSlowDown: 1
+  shouldWalkRandom: 0
 --- !u!114 &114588770683461362
 MonoBehaviour:
   m_ObjectHideFlags: 1
