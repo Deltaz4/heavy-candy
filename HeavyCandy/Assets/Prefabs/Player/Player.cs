@@ -17,7 +17,6 @@ public class Player : MonoBehaviour {
     // Use this for initialization
     void Start() {
         CreateInitialBands();
-        Debug.Log(bands);
 
     }
 
@@ -58,15 +57,13 @@ public class Player : MonoBehaviour {
         if (Input.GetMouseButtonDown(1)) {
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            Debug.Log("Right click!");
 
             if (Physics.Raycast(ray, out hit)) {
-                Debug.Log("There was a hit!");
                 House target = hit.transform.gameObject.GetComponent<House>();
-                Debug.Log("selected: " + selected + ", target: " + target);
-                if (selected && target) {
+                if (selected && target && !target.hasPerformingBand) {
                     selected.gameObject.SetActive(true);
-                    selected.SetDestination(target);
+                    selected.StopPlaying();
+                    selected.SetHouse(target);
                 }
             }
         }
@@ -74,7 +71,6 @@ public class Player : MonoBehaviour {
 
     void UpdateSelection() {
         if (bands.ContainsKey(1) && Input.GetKeyDown(KeyCode.Alpha1)) {
-            Debug.Log("Selected 1");
             selected = bands[1];
         }
         if (bands.ContainsKey(2) && Input.GetKeyDown(KeyCode.Alpha2)) {
