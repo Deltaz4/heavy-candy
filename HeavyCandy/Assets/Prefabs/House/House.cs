@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class House : MonoBehaviour {
 
@@ -6,6 +8,9 @@ public class House : MonoBehaviour {
     private Band playingBand;
     public FactionLogic.Genre genre;
     int candyCount;
+
+	public List<AudioClip> songList = new List<AudioClip>();
+	private AudioSource audio;
 
 	Color colorStart = Color.red;
 	Color colorEnd = Color.green;
@@ -38,6 +43,8 @@ public class House : MonoBehaviour {
     void Start () {
         hasPerformingBand = false;
         candyCount = 0;
+
+		audio = GetComponent<AudioSource>();
 
         rippleA = (GameObject)transform.Find("RippleA").gameObject;
         rippleB = (GameObject)transform.Find("RippleB").gameObject;
@@ -119,6 +126,20 @@ public class House : MonoBehaviour {
         playingBand = band;
         isSettingUp = true;
         tearTimeLeft = 0.0f;
+		if (genre == FactionLogic.Genre.HIP_HOP)
+		{
+			audio.clip = songList[0];
+		}
+		else if (genre == FactionLogic.Genre.METAL)
+		{
+			audio.clip = songList[1];
+		}
+		else if (genre == FactionLogic.Genre.OPERA)
+		{
+			audio.clip = songList[2];
+		}
+
+		audio.Play();
     }
 
     public void StopMusic()
@@ -128,6 +149,8 @@ public class House : MonoBehaviour {
         {
             isTearingDown = true;
         }
+
+		audio.Stop();
     }
 
     public void IncreaseCandyCount(int amount = 1) {
