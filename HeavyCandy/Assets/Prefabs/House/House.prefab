@@ -167,14 +167,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1714713331272350}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19f5d7ced6035024083eba48d5798243, type: 3}
+  m_Script: {fileID: 11500000, guid: 929101fbf8db3b2429a880d823ecc6f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rippleA: {fileID: 1566021439776708}
-  rippleB: {fileID: 1506684492210266}
-  vibPower: 0.5
-  vibDuration: 4
-  house: {fileID: 4467226220641966}
+  hasPerformingBand: 0
+  genre: 0
+  vibPower: 0.7
+  vibDuration: 1
   vibSlowDown: 1
   shouldVib: 0
 --- !u!198 &198357459436393786
