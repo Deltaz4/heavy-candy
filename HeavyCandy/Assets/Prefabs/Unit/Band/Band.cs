@@ -6,8 +6,8 @@ public class Band : Unit {
 
     private bool playing = false;
 
-	void Awake() {
-        base.Initialize();
+	protected override void Awake() {
+        base.Awake();
 	}
 
     public void SetDestination(House house)

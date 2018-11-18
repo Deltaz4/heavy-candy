@@ -13,7 +13,7 @@ abstract public class Unit : MonoBehaviour {
     /// <summary>
     /// Sets the NavMeshAgent of the implementing class.
     /// </summary>
-	protected void Initialize () {
+	protected virtual void Awake() {
         agent = GetComponent<NavMeshAgent>();
     }
 
