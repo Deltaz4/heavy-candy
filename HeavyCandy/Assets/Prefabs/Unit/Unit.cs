@@ -40,8 +40,5 @@ abstract public class Unit : MonoBehaviour {
         else if (agent.destination != null){ // If the unit is aimlessly wandering around
             return (Vector3.Distance(agent.destination, transform.position) < destinationHitRadius);
         }
-
-        // If no house or destination is set; the Unit is considered to be at their destination
-        return true;
     }
 }

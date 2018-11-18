@@ -16,7 +16,7 @@ public class Band : Unit {
     }
 
     void Update () {
-        if (AtDestination()) {
+        if (!playing && AtDestination()) {
             StartPlaying();
         }
 	}

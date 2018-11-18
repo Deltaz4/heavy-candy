@@ -60,7 +60,7 @@ public class Player : MonoBehaviour {
 
             if (Physics.Raycast(ray, out hit)) {
                 House target = hit.transform.gameObject.GetComponent<House>();
-                if (selected && target) {
+                if (selected && target && !target.hasPerformingBand) {
                     selected.gameObject.SetActive(true);
                     selected.StopPlaying();
                     selected.SetHouse(target);

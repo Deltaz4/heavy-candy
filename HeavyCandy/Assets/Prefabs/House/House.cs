@@ -60,11 +60,17 @@ public class House : MonoBehaviour {
         this.genre = genre;
         hasPerformingBand = true;
         shouldVib = true;
+        rippleA.SetActive(true);
+        rippleB.SetActive(true);
     }
 
     public void StopMusic() {
         hasPerformingBand = false;
         shouldVib = false;
+        transform.localPosition = initialPosition;
+        colorRend.material.color = initialColor;
+        rippleA.SetActive(false);
+        rippleB.SetActive(false);
     }
 
     public void IncreaseCandyCount(int amount = 1) {
@@ -81,13 +87,6 @@ public class House : MonoBehaviour {
 
     public void ConfiscateCandy() {
         candyCount = 0;
-    }
-
-	public void ToggleVib ()
-	{
-		shouldVib = !shouldVib;
-        rippleA.SetActive(!rippleA.activeSelf);
-        rippleB.SetActive(!rippleB.activeSelf);
     }
 
 	void HouseColor()
@@ -116,7 +115,6 @@ public class House : MonoBehaviour {
 			}
 			else
 			{
-				shouldVib = false;
 				vibDuration = initialVibDuration;
                 transform.localPosition = initialPosition;
 			}
