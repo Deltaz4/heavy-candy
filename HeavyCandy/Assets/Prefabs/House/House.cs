@@ -24,13 +24,16 @@ public class House : MonoBehaviour {
 	[SerializeField]
 	private bool shouldVib = false; // Should it vibrate
 	Vector3 initialPosition; // Position before vibration
-	float initialVibDuration; // vibDuration value before vibrating
+    Vector3 basePosition;
+    float initialVibDuration; // vibDuration value before vibrating
 
     public float setupTime = 5.0f;
-    public float teardownTime = 5.0f;
     private bool isSettingUp = false;
     private bool isTearingDown = false;
-    private float setTearTimeLeft;
+    private float tearTimeLeft;
+    public float riseHeight = 4.5f;
+    private float initHeight = 1.0f;
+    private float maxHeight = 10.0f;
 
     void Start () {
         hasPerformingBand = false;
@@ -48,7 +51,8 @@ public class House : MonoBehaviour {
 		initialColorDuration = colorDuration;
 
 		initialPosition = transform.localPosition;
-		initialVibDuration = vibDuration;
+        basePosition = initialPosition;
+        initialVibDuration = vibDuration;
 
         HouseController houseController = gameObject.GetComponentInParent<HouseController>();
         houseController.AddHouse(this);
@@ -68,21 +72,24 @@ public class House : MonoBehaviour {
 
         if (isSettingUp)
         {
-            setTearTimeLeft -= Time.deltaTime;
-            if (setTearTimeLeft <= 0.0f)
+            tearTimeLeft += Time.deltaTime;
+            if (tearTimeLeft >= setupTime)
             {
+                tearTimeLeft = setupTime;
                 hasPerformingBand = true;
                 shouldVib = true;
                 rippleA.SetActive(true);
                 rippleB.SetActive(true);
                 isSettingUp = false;
             }
+            scaleHeight();
         }
         else if (isTearingDown)
         {
-            setTearTimeLeft -= Time.deltaTime;
-            if (setTearTimeLeft <= 0.0f)
+            tearTimeLeft -= Time.deltaTime;
+            if (tearTimeLeft <= 0.0f)
             {
+                tearTimeLeft = 0.0f;
                 hasPerformingBand = false;
                 shouldVib = false;
                 transform.localPosition = initialPosition;
@@ -94,16 +101,24 @@ public class House : MonoBehaviour {
                 playingBand.setDestination();
                 isTearingDown = false;
             }
-
+            scaleHeight();
         }
 	}
+
+    private void scaleHeight()
+    {
+        basePosition.y = initialPosition.y + riseHeight * tearTimeLeft / setupTime / 2.0f;
+        transform.localPosition = basePosition;
+        Debug.Log(transform.localPosition);
+        transform.localScale = new Vector3(transform.localScale.x, (maxHeight - initHeight) * tearTimeLeft / setupTime + initHeight, transform.localScale.z);
+    }
 
     public void PlayMusic(Band band)
     {
         this.genre = band.genre;
         playingBand = band;
         isSettingUp = true;
-        setTearTimeLeft = setupTime;
+        tearTimeLeft = 0.0f;
     }
 
     public void StopMusic()
@@ -112,7 +127,6 @@ public class House : MonoBehaviour {
         if (playingBand && playingBand.playing)
         {
             isTearingDown = true;
-            setTearTimeLeft = teardownTime;
         }
     }
 
@@ -153,13 +167,13 @@ public class House : MonoBehaviour {
 		{
 			if (vibDuration > 0)
 			{
-                transform.localPosition = initialPosition + Random.insideUnitSphere * vibPower;
+                transform.localPosition = basePosition + Random.insideUnitSphere * vibPower;
 				vibDuration -= Time.deltaTime * vibSlowDown;
 			}
 			else
 			{
 				vibDuration = initialVibDuration;
-                transform.localPosition = initialPosition;
+                transform.localPosition = basePosition;
 			}
 		}
 	}

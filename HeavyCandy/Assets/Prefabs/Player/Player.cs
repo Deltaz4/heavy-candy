@@ -41,7 +41,7 @@ public class Player : MonoBehaviour {
     }
 
     void BindSelectionButtons() {
-        for (int i = 0; i <= 9; ++i) {
+        for (int i = 1; i <= 9; ++i) {
             Button button = transform.Find("Canvas/ActionButtons/Selection" + i).GetComponent<Button>();
             button.GetComponentInChildren<Text>().text = i.ToString();
             button.onClick.AddListener(() => ChangeSelection(i));
