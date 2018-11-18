@@ -61,8 +61,12 @@ public class Player : MonoBehaviour {
             if (Physics.Raycast(ray, out hit)) {
                 House target = hit.transform.gameObject.GetComponent<House>();
                 if (selected && target && !target.hasPerformingBand) {
-                    selected.gameObject.SetActive(true);
-                    selected.StopPlaying();
+                    if (!selected.playing) {
+                        selected.gameObject.SetActive(true);
+                    }
+                    if (selected.playing) {
+                        selected.house.StopMusic();
+                    }
                     selected.SetHouse(target);
                 }
             }

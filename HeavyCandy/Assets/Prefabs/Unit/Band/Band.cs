@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class Band : Unit {
 
-    private bool playing = false;
-    private FactionLogic.Genre genre;
+    public bool playing = false;
+    [HideInInspector]
+    public FactionLogic.Genre genre;
 
     private GameObject sprite;
     private UnitSprite unitSprite;
@@ -59,6 +60,20 @@ public class Band : Unit {
         base.SetDestination(house.transform.position);
     }
 
+    public override void SetHouse(House house)
+    {
+        this.house = house;
+        if (!playing)
+        {
+            SetDestination(house.transform.position);
+        }
+    }
+
+    public void setDestination()
+    {
+        SetDestination(house.transform.position);
+    }
+
     void Update () {
         sprite.GetComponent<UnitSprite>().SetRotation(transform.rotation.eulerAngles.y);
         if (!playing && AtDestination()) {
@@ -66,9 +81,10 @@ public class Band : Unit {
         }
 	}
 
-    void StartPlaying() {
+    void StartPlaying()
+    {
         playing = true;
-        house.PlayMusic(genre);
+        house.PlayMusic(this);
         gameObject.SetActive(false);
     }
 
@@ -88,9 +104,9 @@ public class Band : Unit {
     }
 
     public void StopPlaying() {
-        if (playing) {
+        if (playing)
+        {
             playing = false;
-            house.StopMusic();
         }
     }
 }

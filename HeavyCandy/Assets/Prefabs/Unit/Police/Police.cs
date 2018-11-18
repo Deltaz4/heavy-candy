@@ -8,7 +8,7 @@ public class Police : Unit {
 
     private GameObject sprite;
 
-    protected virtual void Awake()
+    protected override void Awake()
     {
         base.Awake();
         sprite = transform.Find("Sprite").gameObject;

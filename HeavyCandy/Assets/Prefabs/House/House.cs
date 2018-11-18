@@ -3,6 +3,7 @@
 public class House : MonoBehaviour {
 
     public bool hasPerformingBand;
+    private Band playingBand;
     public FactionLogic.Genre genre;
     int candyCount;
 
@@ -25,8 +26,13 @@ public class House : MonoBehaviour {
 	Vector3 initialPosition; // Position before vibration
 	float initialVibDuration; // vibDuration value before vibrating
 
+    public float setupTime = 5.0f;
+    public float teardownTime = 5.0f;
+    private bool isSettingUp = false;
+    private bool isTearingDown = false;
+    private float setTearTimeLeft;
 
-	void Start () {
+    void Start () {
         hasPerformingBand = false;
         candyCount = 0;
 
@@ -44,7 +50,7 @@ public class House : MonoBehaviour {
 		initialPosition = transform.localPosition;
 		initialVibDuration = vibDuration;
 
-        HouseController houseController = (HouseController)transform.parent.GetComponent(typeof(HouseController));
+        HouseController houseController = gameObject.GetComponentInParent<HouseController>();
         houseController.AddHouse(this);
 	}
 
@@ -59,23 +65,55 @@ public class House : MonoBehaviour {
 			HouseColor();
 			Vibrate();
 		}
+
+        if (isSettingUp)
+        {
+            setTearTimeLeft -= Time.deltaTime;
+            if (setTearTimeLeft <= 0.0f)
+            {
+                hasPerformingBand = true;
+                shouldVib = true;
+                rippleA.SetActive(true);
+                rippleB.SetActive(true);
+                isSettingUp = false;
+            }
+        }
+        else if (isTearingDown)
+        {
+            setTearTimeLeft -= Time.deltaTime;
+            if (setTearTimeLeft <= 0.0f)
+            {
+                hasPerformingBand = false;
+                shouldVib = false;
+                transform.localPosition = initialPosition;
+                colorRend.material.color = initialColor;
+                rippleA.SetActive(false);
+                rippleB.SetActive(false);
+                playingBand.gameObject.SetActive(true);
+                playingBand.StopPlaying();
+                playingBand.setDestination();
+                isTearingDown = false;
+            }
+
+        }
 	}
 
-    public void PlayMusic(FactionLogic.Genre genre) {
-        this.genre = genre;
-        hasPerformingBand = true;
-        shouldVib = true;
-        rippleA.SetActive(true);
-        rippleB.SetActive(true);
+    public void PlayMusic(Band band)
+    {
+        this.genre = band.genre;
+        playingBand = band;
+        isSettingUp = true;
+        setTearTimeLeft = setupTime;
     }
 
-    public void StopMusic() {
-        hasPerformingBand = false;
-        shouldVib = false;
-        transform.localPosition = initialPosition;
-        colorRend.material.color = initialColor;
-        rippleA.SetActive(false);
-        rippleB.SetActive(false);
+    public void StopMusic()
+    {
+        isSettingUp = false;
+        if (playingBand && playingBand.playing)
+        {
+            isTearingDown = true;
+            setTearTimeLeft = teardownTime;
+        }
     }
 
     public void IncreaseCandyCount(int amount = 1) {

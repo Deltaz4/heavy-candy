@@ -7,7 +7,7 @@ abstract public class Unit : MonoBehaviour {
 
     NavMeshAgent agent;
     public Collider collisionGameObject;
-    protected House house;
+    public House house;
     public float destinationHitRadius;
 
     /// <summary>
@@ -18,10 +18,10 @@ abstract public class Unit : MonoBehaviour {
     }
 
     protected void SetDestination(Vector3 destination) {
-        agent.destination = destination;
+        GetComponent<NavMeshAgent>().destination = destination;
     }
     
-    public void SetHouse(House house) {
+    public virtual void SetHouse(House house) {
         this.house = house;
         SetDestination(house.transform.position);
     }
