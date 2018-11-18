@@ -18,16 +18,15 @@ public class PoliceStation : MonoBehaviour {
         
 	}
 
-    public void DeployPoliceSquad(FactionLogic.Genre genre) {
+    public void DeployPoliceSquad(FactionLogic.Genre genre, House targetHouse) {
 
         Police deployedSquad = (Police) Instantiate(police, 
             policeSpawnPoint.position, 
             policeSpawnPoint.rotation);
 
-        // deployedSquad.SetHouse(); TODO implement choice of house
-        // deployedSquad.SetDestination(); TODO ..or a destination for it to patrol!
         deployedSquad.transform.parent = gameObject.transform;
-        police.setTargetGenre(genre);
+        deployedSquad.setTargetGenre(genre);
+        deployedSquad.SetHouse(targetHouse);
     }
 
     public void DestinationReached(FactionLogic.Genre genre, bool candyFound) {

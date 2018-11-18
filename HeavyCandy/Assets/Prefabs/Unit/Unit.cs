@@ -6,16 +6,16 @@ using UnityEngine.AI;
 abstract public class Unit : MonoBehaviour {
 
     NavMeshAgent agent;
-    private Collider collisionGameObject;
+    public Collider collisionGameObject;
     protected House house;
     public float destinationHitRadius;
 
     /// <summary>
     /// Sets the NavMeshAgent of the implementing class.
     /// </summary>
-	protected void Initialize () {
+	protected virtual void Awake() {
         agent = GetComponent<NavMeshAgent>();
-	}
+    }
 
     protected void SetDestination(Vector3 destination) {
         agent.destination = destination;
