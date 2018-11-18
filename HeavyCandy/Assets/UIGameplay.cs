@@ -6,7 +6,6 @@ using TMPro;
 
 public class UIGameplay : MonoBehaviour
 {
-
     public TextMeshProUGUI PoliceOperaText;
     public Slider PoliceOperaSlider;
 

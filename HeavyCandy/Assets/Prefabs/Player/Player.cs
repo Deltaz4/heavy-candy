@@ -46,7 +46,7 @@ public class Player : MonoBehaviour {
 
 
     void BindSelectionButtons() {
-        for (int i = 1; i <= 8; ++i) {
+        for (int i = 1; i <= 9; ++i) {
             Button button = transform.Find("Canvas/ActionButtons/Selection" + i).GetComponent<Button>();
             button.GetComponentInChildren<Text>().text = i.ToString();
             button.onClick.AddListener(() => ChangeSelection(i));
@@ -99,8 +99,12 @@ public class Player : MonoBehaviour {
                     deployedDeliverer.SetCandyCount(capacityOfDeliverer);
                 }
                 else if (selectedBand && target && !target.hasPerformingBand) {
-                    selectedBand.gameObject.SetActive(true);
-                    selectedBand.StopPlaying();
+                    if (!selectedBand.playing) {
+                        selectedBand.gameObject.SetActive(true);
+                    }
+                    if (selectedBand.playing) {
+                        selectedBand.house.StopMusic();
+                    }
                     selectedBand.SetHouse(target);
                 }
             }
