@@ -31,18 +31,23 @@ public class Player : MonoBehaviour {
 
     void CreateInitialBands() {
         Vector3 spawnLocation = hq.transform.position;
-        for(int i = 1; i <= startingBands; ++i) {
+        for (int i = 1; i <= startingBands; ++i) {
             GameObject newBand = Instantiate(bandPrefab, spawnLocation - 10 * Vector3.right, Quaternion.identity);
             bands.Add(i, newBand.GetComponent<Band>());
-            if(i <= 3) {
-                //newBand.genre = FactionLogic.Genre.HIP_HOP;
+            if (i <= 3) {
+                newBand.GetComponent<Band>().SetGenre(FactionLogic.Genre.HIP_HOP);
+            } else if (i >= 4 && i <= 6) {
+                newBand.GetComponent<Band>().SetGenre(FactionLogic.Genre.METAL);
+            } else {
+                newBand.GetComponent<Band>().SetGenre(FactionLogic.Genre.OPERA);
             }
             newBand.SetActive(false);
         }
     }
 
+
     void BindSelectionButtons() {
-        for (int i = 0; i <= 9; ++i) {
+        for (int i = 1; i <= 9; ++i) {
             Button button = transform.Find("Canvas/ActionButtons/Selection" + i).GetComponent<Button>();
             button.GetComponentInChildren<Text>().text = i.ToString();
             button.onClick.AddListener(() => ChangeSelection(i));
@@ -51,7 +56,6 @@ public class Player : MonoBehaviour {
     }
 
     void ChangeSelection(int bandNumber) {
-        Debug.Log("Button pressed");
         selectedBand = bands[bandNumber];
     }
 
@@ -96,8 +100,12 @@ public class Player : MonoBehaviour {
                     deployedDeliverer.SetCandyCount(capacityOfDeliverer);
                 }
                 else if (selectedBand && target && !target.hasPerformingBand) {
-                    selectedBand.gameObject.SetActive(true);
-                    selectedBand.StopPlaying();
+                    if (!selectedBand.playing) {
+                        selectedBand.gameObject.SetActive(true);
+                    }
+                    if (selectedBand.playing) {
+                        selectedBand.house.StopMusic();
+                    }
                     selectedBand.SetHouse(target);
                 }
             }

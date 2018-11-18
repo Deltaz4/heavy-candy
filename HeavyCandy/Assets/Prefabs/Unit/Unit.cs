@@ -7,7 +7,7 @@ abstract public class Unit : MonoBehaviour {
 
     NavMeshAgent agent;
     public Collider collisionGameObject;
-    protected House house;
+    public House house;
     public float destinationHitRadius;
 
     /// <summary>
@@ -18,7 +18,7 @@ abstract public class Unit : MonoBehaviour {
     }
 
     protected void SetDestination(Vector3 destination) {
-        agent.destination = destination;
+        GetComponent<NavMeshAgent>().destination = destination;
     }
     
     public virtual void SetHouse(House house) {
@@ -40,5 +40,6 @@ abstract public class Unit : MonoBehaviour {
         else if (agent.destination != null){ // If the unit is aimlessly wandering around
             return (Vector3.Distance(agent.destination, transform.position) < destinationHitRadius);
         }
+        return false;
     }
 }
