@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Band : Unit {
-
+    
     public bool playing = false;
     [HideInInspector]
     public FactionLogic.Genre genre;
@@ -76,7 +76,7 @@ public class Band : Unit {
 
     void Update () {
         sprite.GetComponent<UnitSprite>().SetRotation(transform.rotation.eulerAngles.y);
-        if (!playing && AtDestination()) {
+        if (!playing && AtDestination() && !house.hasPerformingBand) {
             StartPlaying();
         }
 	}
