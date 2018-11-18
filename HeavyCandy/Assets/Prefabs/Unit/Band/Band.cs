@@ -6,7 +6,7 @@ public class Band : Unit {
 
     private bool playing = false;
 
-	void Awake () {
+	void Awake() {
         base.Initialize();
 	}
 
@@ -17,9 +17,34 @@ public class Band : Unit {
 
     void Update () {
         if (AtDestination()) {
-            playing = true;
-            //Activate house animation
-
+            StartPlaying();
         }
 	}
+
+    void StartPlaying() {
+        playing = true;
+        FactionLogic.Genre randomGenre = RandomizeGenre();
+        house.PlayMusic(randomGenre);
+        gameObject.SetActive(false);
+    }
+
+    private FactionLogic.Genre RandomizeGenre() {
+        int i = Random.Range(0, 3);
+        if(i < 1) {
+            return FactionLogic.Genre.HIP_HOP;
+        }
+        else if(1 <= i && i < 2) {
+            return FactionLogic.Genre.METAL;
+        }
+        else {
+            return FactionLogic.Genre.OPERA;
+        }
+    }
+
+    public void StopPlaying() {
+        if (playing) {
+            playing = false;
+            house.StopMusic();
+        }
+    }
 }

@@ -15,7 +15,6 @@ abstract public class Unit : MonoBehaviour {
     /// </summary>
 	protected void Initialize () {
         agent = GetComponent<NavMeshAgent>();
-        SetDestination(house.transform.position);
     }
 
     protected void SetDestination(Vector3 destination) {
@@ -24,6 +23,7 @@ abstract public class Unit : MonoBehaviour {
     
     public void SetHouse(House house) {
         this.house = house;
+        SetDestination(house.transform.position);
     }
 
     protected bool AtDestination() {

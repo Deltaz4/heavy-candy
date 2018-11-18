@@ -26,8 +26,7 @@ public class House : MonoBehaviour {
 	float initialVibDuration; // vibDuration value before vibrating
 
 
-	void Start ()
-	{
+	void Start () {
         hasPerformingBand = false;
         candyCount = 0;
 
@@ -44,8 +43,7 @@ public class House : MonoBehaviour {
 		initialVibDuration = vibDuration;
 	}
 
-	void Update ()
-	{
+	void Update () {
 		if (Input.GetKeyDown(KeyCode.V))
 		{
 			shouldVib = true;
@@ -55,11 +53,6 @@ public class House : MonoBehaviour {
 		{
 			HouseColor();
 			Vibrate();
-		}
-		else
-		{
-			rippleA.SetActive(false);
-			rippleB.SetActive(false);
 		}
 	}
 
@@ -93,7 +86,9 @@ public class House : MonoBehaviour {
 	public void ToggleVib ()
 	{
 		shouldVib = !shouldVib;
-	}
+        rippleA.SetActive(!rippleA.activeSelf);
+        rippleB.SetActive(!rippleB.activeSelf);
+    }
 
 	void HouseColor()
 	{
@@ -114,9 +109,6 @@ public class House : MonoBehaviour {
 	{
 		if (shouldVib)
 		{
-			rippleA.SetActive(true);
-			rippleB.SetActive(true);
-
 			if (vibDuration > 0)
 			{
                 transform.localPosition = initialPosition + Random.insideUnitSphere * vibPower;
