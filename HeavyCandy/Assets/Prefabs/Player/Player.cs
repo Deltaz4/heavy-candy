@@ -1,15 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour {
 
     private Dictionary<int, Band> bands = new Dictionary<int, Band>();
     private Band selected;
+    private List<Button> selectionButtons = new List<Button>();
+
     public Headquarters hq;
 
     public float cameraSpeed = 4;
-    public int startingBands = 3;
+    private int startingBands = 9;
     public GameObject bandPrefab;
 
     public int money;
@@ -17,6 +20,7 @@ public class Player : MonoBehaviour {
     // Use this for initialization
     void Start() {
         CreateInitialBands();
+        BindSelectionButtons();
 
     }
 
@@ -25,8 +29,25 @@ public class Player : MonoBehaviour {
         for(int i = 1; i <= startingBands; ++i) {
             GameObject newBand = Instantiate(bandPrefab, spawnLocation - 10 * Vector3.right, Quaternion.identity);
             bands.Add(i, newBand.GetComponent<Band>());
+            if(i <= 3) {
+                //newBand.genre = FactionLogic.Genre.HIP_HOP;
+            }
             newBand.SetActive(false);
         }
+    }
+
+    void BindSelectionButtons() {
+        for (int i = 0; i <= 9; ++i) {
+            Button button = transform.Find("Canvas/ActionButtons/Selection" + i).GetComponent<Button>();
+            button.GetComponentInChildren<Text>().text = i.ToString();
+            button.onClick.AddListener(() => ChangeSelection(i));
+            selectionButtons.Add(button);
+        }
+    }
+
+    void ChangeSelection(int bandNumber) {
+        Debug.Log("Button pressed");
+        selected = bands[bandNumber];
     }
 
     // Update is called once per frame

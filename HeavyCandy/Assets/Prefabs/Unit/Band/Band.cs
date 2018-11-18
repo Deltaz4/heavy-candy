@@ -5,7 +5,7 @@ using UnityEngine;
 public class Band : Unit {
 
     private bool playing = false;
-    private FactionLogic.Genre genre;
+    public FactionLogic.Genre genre;
 
     private GameObject sprite;
     private UnitSprite unitSprite;
@@ -61,7 +61,7 @@ public class Band : Unit {
 
     void Update () {
         sprite.GetComponent<UnitSprite>().SetRotation(transform.rotation.eulerAngles.y);
-        if (!playing && AtDestination()) {
+        if (!playing && AtDestination() && !house.hasPerformingBand) {
             StartPlaying();
         }
 	}
