@@ -41,6 +41,9 @@ public class House : MonoBehaviour {
 
 		initialPosition = transform.localPosition;
 		initialVibDuration = vibDuration;
+
+        HouseController houseController = (HouseController)transform.parent.GetComponent(typeof(HouseController));
+        houseController.AddHouse(this);
 	}
 
 	void Update () {
