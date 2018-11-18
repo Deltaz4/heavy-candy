@@ -11,4 +11,9 @@ public class MenuScript : MonoBehaviour
     {
         SceneManager.LoadScene(LevelIndex);
     }
+
+    public void Quit()
+    {
+        Application.Quit();
+    }
 }
