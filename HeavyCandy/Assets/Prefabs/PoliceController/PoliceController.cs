@@ -24,6 +24,9 @@ public class PoliceController : MonoBehaviour {
         successfulPoliceStings = 0;
         gameOverMax = 100;
         gameOverMeter = 0;
+
+        if (policeStingMultiplier == 0)
+            policeStingMultiplier = 5;
     }
 
     void Update () {
