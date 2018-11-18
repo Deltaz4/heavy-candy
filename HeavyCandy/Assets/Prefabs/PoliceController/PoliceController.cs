@@ -22,7 +22,7 @@ public class PoliceController : MonoBehaviour {
             FactionLogic.Genre targetGenre = PickGenre();
             House targetHouse = PickHouse(targetGenre);
 
-            Debug.Log(string.Format("Genre: {0}, House: {1}", targetGenre, targetHouse));
+            //Debug.Log(string.Format("Genre: {0}, House: {1}", targetGenre, targetHouse));
 
             if (targetHouse != null) { 
                 // Problematic if no houses are partying with the picked genre
@@ -65,6 +65,6 @@ public class PoliceController : MonoBehaviour {
     }
 
     public void DestinationReached(FactionLogic.Genre genre, bool foundCandy) {
-        Debug.Log(string.Format("Reached house with genre {0}", genre));
+        //Debug.Log(string.Format("Reached house with genre {0}", genre));
     }
 }

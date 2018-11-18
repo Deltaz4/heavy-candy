@@ -16,10 +16,13 @@ public class UnitSprite : MonoBehaviour {
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
+    private void LateUpdate()
+    {
+        transform.forward = Camera.main.transform.forward;
+    }
+
     public void SetRotation(float rotation)
     {
-        Debug.Log("SetRotation");
-        Debug.Log("rotation");
         if (rotation < 45.0f) {
             spriteRenderer.sprite = backLeft;
         }
