@@ -4,7 +4,7 @@ using UnityEngine;
 
 
 
-public class FactionLogic : MonoBehaviour {
+public class FactionLogic {
     int attractionStartValue = 50;
     int attractionMaxValue = 100;
     int attractionMinValue = 0;
@@ -20,14 +20,6 @@ public class FactionLogic : MonoBehaviour {
             factionAttractions.Add(genre, attractionStartValue);
         }
     }
-
-	void Start () {
-        
-	}
-	
-	void Update () {
-		
-	}
 
     /// <summary>
     /// Increments the attraction of the given genre by the specified amount,

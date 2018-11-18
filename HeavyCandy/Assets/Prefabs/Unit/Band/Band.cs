@@ -5,10 +5,13 @@ using UnityEngine;
 public class Band : Unit {
 
     private bool playing = false;
-
+    
+    private GameObject sprite;
+    
 	protected override void Awake() {
         base.Awake();
-	}
+        sprite = transform.Find("Sprite").gameObject;
+    }
 
     public void SetDestination(House house)
     {
@@ -16,10 +19,15 @@ public class Band : Unit {
     }
 
     void Update () {
+        sprite.GetComponent<UnitSprite>().SetRotation(transform.rotation.eulerAngles.y);
         if (!playing && AtDestination()) {
             StartPlaying();
         }
 	}
+    
+    private void LateUpdate() {
+        sprite.transform.forward = Camera.main.transform.forward;
+    }
 
     void StartPlaying() {
         playing = true;
