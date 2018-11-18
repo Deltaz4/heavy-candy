@@ -129,4 +129,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f4c1a18ef4daed4db59da9e58f39442, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hq: {fileID: 0}
   cameraSpeed: 2
+  startingBands: 3
+  bandPrefab: {fileID: 1834875729259978, guid: 2dc2151a3a5768d4082548d01f65624b, type: 2}
+  money: 0

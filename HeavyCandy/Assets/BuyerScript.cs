@@ -11,20 +11,29 @@ public class BuyerScript : MonoBehaviour {
 	[SerializeField]
 	bool shouldWalkRandom;
 
-	void Start ()
+    private GameObject sprite;
+
+    void Start ()
 	{
 		walkRandomX = Random.Range(-1, 2);
 		walkRandomZ = Random.Range(-1, 2);
 		walkDuration = Random.Range(1, 6);
 		shouldWalkRandom = true;
-	}
+        sprite = transform.Find("Sprite").gameObject;
+    }
 	
 	void Update ()
 	{
 		WalkRandom();
-	}
+    }
 
-	void SetWalkDuration ()
+    private void LateUpdate()
+    {
+        sprite.transform.forward = Camera.main.transform.forward;
+    }
+
+
+    void SetWalkDuration ()
 	{
 		walkDuration = Random.Range(1, 6);
 	}
