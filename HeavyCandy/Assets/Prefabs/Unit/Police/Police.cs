@@ -11,6 +11,7 @@ public class Police : Unit {
     protected virtual void Awake()
     {
         base.Awake();
+        destinationHitRadius = 5.0f;
         sprite = transform.Find("Sprite").gameObject;
     }
 

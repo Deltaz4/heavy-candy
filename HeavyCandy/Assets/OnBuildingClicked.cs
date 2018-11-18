@@ -6,8 +6,9 @@ using UnityEngine.UI;
 public class OnBuildingClicked : MonoBehaviour
 {
     public GameObject Menu;
-    public Image Candy;
-    public Image Gig;
+    public GameObject Cross;
+    public Sprite Candy;
+    public Sprite Gig;
 
     public Vector3 ObjectPos;
     public Vector2 ViewPortPoint;
@@ -20,9 +21,6 @@ public class OnBuildingClicked : MonoBehaviour
 
     public bool MouseClicked;
     public bool MouseClickedOnObject;
-
-    public bool CandyIsClicked;
-    public bool GigIsClicked;
 
     public Sprite CandyGoState;
     public Sprite CandyGoStateHighLighted;
@@ -49,19 +47,7 @@ public class OnBuildingClicked : MonoBehaviour
 
             MouseClicked = true;
 
-            StartCoroutine(Wait());
-            if (MouseClicked && !MouseClickedOnObject)
-            {
-                if ((MouseClickPos.x > ViewPortPoint.x + Offset || MouseClickPos.x < ViewPortPoint.x - Offset) &&
-                    (MouseClickPos.y > ViewPortPoint.y + Offset || MouseClickPos.y < ViewPortPoint.y - Offset))
-
-                Menu.SetActive(false);
-                StartCoroutine(ResetVariables());
-            }
-            else
-            {
-                StartCoroutine(ResetVariables());
-            }
+            StartCoroutine(ResetVariables());
         }
     }
 
@@ -70,7 +56,6 @@ public class OnBuildingClicked : MonoBehaviour
         if (!Menu.activeSelf)
         {
             MouseClickedOnObject = true;
-            print("!!");
             ObjectPos = (gameObject.transform.position);
             Menu.SetActive(true);
             ViewPortPoint = Camera.main.WorldToScreenPoint(new Vector3(ObjectPos.x + Offset, ObjectPos.y, ObjectPos.z + Offset));
@@ -84,18 +69,20 @@ public class OnBuildingClicked : MonoBehaviour
 
     public void OnCandyClick ()
     {
-        print("CLICKED");
+        Debug.Log("button clicked!");
         Menu.SetActive(true);
+        MouseClickedOnObject = true;
+        print("MouseClickedOnObject: " + MouseClickedOnObject);
         StartCoroutine(ResetVariables());
 
-        if ((Candy.sprite = CandyGoState) && Money >= CandyCost)
+        if ((Candy = CandyGoState) && Money >= CandyCost)
         {
-            Candy.sprite = CandyAbortState;
+            Candy = CandyAbortState;
             Money = Money - CandyCost;
         }
-        if (Candy.sprite = CandyAbortState)
+        if (Candy = CandyAbortState)
         {
-            Candy.sprite = CandyGoState;
+            Candy = CandyGoState;
         }
         else
         {
@@ -106,20 +93,29 @@ public class OnBuildingClicked : MonoBehaviour
     public void OnGigClick ()
     {
         Menu.SetActive(true);
+        MouseClickedOnObject = true;
         StartCoroutine(ResetVariables());
 
-        if ((Gig.sprite = GigGoState) && Money >= GigCost)
+        if ((Gig = GigGoState) && Money >= GigCost)
         {
-            Gig.sprite = GigAbortState;
+            Gig = GigAbortState;
             Money = Money - GigCost;
         }
-        if (Gig.sprite = GigAbortState)
+        if (Gig = GigAbortState)
         {
-            Gig.sprite = GigGoState;
+            Gig = GigGoState;
         }
         else
         {
             print("You don't have enough money, fool!");
+        }
+    }
+
+    public void OnCrossClick ()
+    {
+        if (Menu.activeSelf)
+        {
+            Menu.SetActive(false);
         }
     }
 
@@ -128,10 +124,5 @@ public class OnBuildingClicked : MonoBehaviour
         yield return new WaitForSeconds(.3f);
         MouseClicked = false;
         MouseClickedOnObject = false;
-    }
-
-    IEnumerator Wait ()
-    {
-        yield return new WaitForSeconds(.1f);
     }
 }
