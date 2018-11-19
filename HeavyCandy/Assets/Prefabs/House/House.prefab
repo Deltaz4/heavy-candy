@@ -292,21 +292,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 1714713331272350}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19f5d7ced6035024083eba48d5798243, type: 3}
+  m_Script: {fileID: 11500000, guid: 929101fbf8db3b2429a880d823ecc6f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   hasPerformingBand: 0
   genre: 0
   songList:
-  - {fileID: 8300000, guid: 5c85b81ba1520ad46916c7ca23b777a6, type: 3}
-  - {fileID: 8300000, guid: 340d2557c8b07b844a257f24c19774bc, type: 3}
-  - {fileID: 8300000, guid: f7606015eb8de2348bdfd125e20f5c7e, type: 3}
+  - {fileID: 8300000, guid: a46660c864ebe0d48ac61ecb94f54e93, type: 3}
+  - {fileID: 8300000, guid: 5b7ac48806c49134c8b0768435aee4cc, type: 3}
+  - {fileID: 8300000, guid: ebee3e7bc38a06d45963618d78a5f6ad, type: 3}
   vibPower: 0.7
   vibDuration: 1
   vibSlowDown: 1
   shouldVib: 0
   setupTime: 5
-  riseHeight: 4.5
+  riseHeight: 9
 --- !u!198 &198357459436393786
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -9398,8 +9398,8 @@ ParticleSystemRenderer:
   m_ReflectionProbeUsage: 0
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 83cd75180a110474897f6ef8a0fe5b61, type: 2}
+  - {fileID: 2100000, guid: 83cd75180a110474897f6ef8a0fe5b61, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

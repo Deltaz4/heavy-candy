@@ -44,7 +44,7 @@ public class House : MonoBehaviour {
         hasPerformingBand = false;
         candyCount = 0;
 
-		audio = GetComponent<AudioSource>();
+		audio = GetComponentInChildren<AudioSource>();
 
         rippleA = (GameObject)transform.Find("RippleA").gameObject;
         rippleB = (GameObject)transform.Find("RippleB").gameObject;
@@ -116,7 +116,6 @@ public class House : MonoBehaviour {
     {
         basePosition.y = initialPosition.y + riseHeight * tearTimeLeft / setupTime / 2.0f;
         transform.localPosition = basePosition;
-        Debug.Log(transform.localPosition);
         transform.localScale = new Vector3(transform.localScale.x, (maxHeight - initHeight) * tearTimeLeft / setupTime + initHeight, transform.localScale.z);
     }
 

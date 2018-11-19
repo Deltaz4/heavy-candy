@@ -173,7 +173,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collisionGameObject: {fileID: 136826861791246008}
+  house: {fileID: 0}
   destinationHitRadius: 5.5
+  playing: 0
+  genre: 0
   operaBackLeft: {fileID: 21300000, guid: c853f742cc2bed84f961f30e41b0b593, type: 3}
   operaBackRight: {fileID: 21300000, guid: e1def4f4ce6b2a74188f50f38985af00, type: 3}
   operaFrontLeft: {fileID: 21300000, guid: 7274c48232f28e9419344a4cc76cac32, type: 3}
