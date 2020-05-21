@@ -4,15 +4,17 @@ using UnityEngine;
 
 
 
-public class FactionLogic {
+public class FactionLogic
+{
     int attractionStartValue = 50;
     int attractionMaxValue = 100;
     int attractionMinValue = 0;
 
-    public enum Genre {OPERA, METAL, HIP_HOP};
+    public enum Genre { OPERA, METAL, HIP_HOP };
     Dictionary<Genre, int> factionAttractions;
 
-    public FactionLogic() {
+    public FactionLogic()
+    {
         // Initizlize dictionary containing an attraction for each Genre
         factionAttractions = new Dictionary<Genre, int>();
         foreach (Genre genre in System.Enum.GetValues(typeof(Genre)))
@@ -27,7 +29,8 @@ public class FactionLogic {
     /// </summary>
     /// <param name="genre"></param>
     /// <param name="amount"></param>
-    public void increaseAttraction(Genre genre, int amount = 1) {
+    public void increaseAttraction(Genre genre, int amount = 1)
+    {
         factionAttractions[genre] = clampAttraction(factionAttractions[genre] + amount);
     }
 
@@ -47,7 +50,8 @@ public class FactionLogic {
     /// </summary>
     /// <returns>A Dictionary containing the probabilities (percentage of total attraction)
     /// for each genre. Values for each Key range between 0 to 1. </returns>
-    public Dictionary<Genre, float> GetProbabilities() {
+    public Dictionary<Genre, float> GetProbabilities()
+    {
         int totalAttraction = 0; // Sum of attraction for all genres
         Dictionary<Genre, float> probabilities = new Dictionary<Genre, float>();
 
@@ -55,20 +59,23 @@ public class FactionLogic {
         foreach (Genre g in System.Enum.GetValues(typeof(Genre)))
         {
             int retreivedAttraction;
-            bool successfulRetreival = factionAttractions.TryGetValue(g, 
+            bool successfulRetreival = factionAttractions.TryGetValue(g,
                 out retreivedAttraction);
 
-            if (successfulRetreival) {
+            if (successfulRetreival)
+            {
                 totalAttraction += retreivedAttraction;
                 probabilities.Add(g, 0.0f);
             }
-            else {
+            else
+            {
                 Debug.LogError("Failed to retreive a value for " + g);
                 return null;
             }
         }
 
-        foreach (Genre g in System.Enum.GetValues(typeof(Genre))) {
+        foreach (Genre g in System.Enum.GetValues(typeof(Genre)))
+        {
             int retreivedAttraction;
             factionAttractions.TryGetValue(g, out retreivedAttraction);
 

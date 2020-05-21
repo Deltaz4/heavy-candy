@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class PoliceController : MonoBehaviour {
+public class PoliceController : MonoBehaviour
+{
 
     public HouseController houseController;
     public PoliceStation policeStation;
@@ -19,7 +20,8 @@ public class PoliceController : MonoBehaviour {
     public float gameOverDecayInterval; // Interval in seconds at which the gameOverMeter is reduced by 1. (Never reduced if interval is set to 0)
     float timeSinceLastDecay;
 
-    void Start() {
+    void Start()
+    {
         factionLogic = new FactionLogic();
         successfulPoliceStings = 0;
         gameOverMax = 100;
@@ -29,23 +31,28 @@ public class PoliceController : MonoBehaviour {
             policeStingMultiplier = 5;
     }
 
-    void Update () {
+    void Update()
+    {
         timeSinceLastSpawn += Time.deltaTime;
-        if (timeSinceLastSpawn > policeSpawnInterval) {
+        if (timeSinceLastSpawn > policeSpawnInterval)
+        {
             GeneratePoliceSquad();
             timeSinceLastSpawn -= policeSpawnInterval;
         }
 
-        if (gameOverDecayInterval != 0) {
+        if (gameOverDecayInterval != 0)
+        {
             timeSinceLastDecay += Time.deltaTime;
-            if (timeSinceLastDecay > gameOverDecayInterval) {
+            if (timeSinceLastDecay > gameOverDecayInterval)
+            {
                 DecayGameMeter();
                 timeSinceLastDecay -= gameOverDecayInterval;
             }
         }
     }
 
-    private void GeneratePoliceSquad() {
+    private void GeneratePoliceSquad()
+    {
         FactionLogic.Genre targetGenre = PickGenre();
         House targetHouse = PickHouse(targetGenre);
 
@@ -59,31 +66,37 @@ public class PoliceController : MonoBehaviour {
         }
     }
 
-    private void DecayGameMeter() {
+    private void DecayGameMeter()
+    {
         if (gameOverMeter == 0)
             return;
         gameOverMeter--;
     }
 
-    private void IncrementGameMeter() {
+    private void IncrementGameMeter()
+    {
         gameOverMeter += policeStingMultiplier;
-        if (gameOverMeter > gameOverMax) {
+        if (gameOverMeter > gameOverMax)
+        {
             gameOverMeter = gameOverMax;
             // Game over!
         }
     }
 
-    private FactionLogic.Genre PickGenre() {
+    private FactionLogic.Genre PickGenre()
+    {
         Dictionary<FactionLogic.Genre, float> probabilities = factionLogic.GetProbabilities();
 
         float randomValue = Random.Range(0.0f, 1.0f);
         float rangeStart = 0.0f;
         float rangeEnd = 0.0f;
 
-        foreach (KeyValuePair<FactionLogic.Genre, float> entry in probabilities) {
+        foreach (KeyValuePair<FactionLogic.Genre, float> entry in probabilities)
+        {
             rangeEnd += entry.Value;
 
-            if (randomValue > rangeStart && randomValue < rangeEnd) {
+            if (randomValue > rangeStart && randomValue < rangeEnd)
+            {
                 return entry.Key;
             }
             rangeStart = rangeEnd;
@@ -93,7 +106,8 @@ public class PoliceController : MonoBehaviour {
         return FactionLogic.Genre.METAL;
     }
 
-    private House PickHouse(FactionLogic.Genre genre) {
+    private House PickHouse(FactionLogic.Genre genre)
+    {
         List<House> houses = houseController.GetPartyingHousesByGenre(genre);
         if (houses.Count == 0)
             return null;
@@ -104,22 +118,27 @@ public class PoliceController : MonoBehaviour {
         return houses[r];
     }
 
-    public bool IsGameOver() {
+    public bool IsGameOver()
+    {
         return (gameOverMeter == gameOverMax);
     }
 
-    public void DestinationReached(FactionLogic.Genre genre, bool foundCandy) {
-        if (foundCandy) { 
+    public void DestinationReached(FactionLogic.Genre genre, bool foundCandy)
+    {
+        if (foundCandy)
+        {
             successfulPoliceStings++;
             IncrementGameMeter();
         }
     }
 
-    public int GetGameOverMax() {
+    public int GetGameOverMax()
+    {
         return gameOverMax;
     }
 
-    public int GetGameOverMeter() {
+    public int GetGameOverMeter()
+    {
         return gameOverMeter;
     }
 }

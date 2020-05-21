@@ -7,7 +7,7 @@ public class CandyDelivery : Unit
     private GameObject sprite;
     int candyCount;
 
-    protected virtual void Awake()
+    new protected virtual void Awake()
     {
         base.Awake();
         destinationHitRadius = 5.0f;

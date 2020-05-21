@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HouseController : MonoBehaviour {
+public class HouseController : MonoBehaviour
+{
 
     List<House> houses;
     List<Buyer> buyers;
@@ -11,8 +12,9 @@ public class HouseController : MonoBehaviour {
     public Buyer buyerPrefab;
     private FactionLogic buyersFactionLogic;
 
-	// Use this for initialization
-	void Awake () {
+    // Use this for initialization
+    void Awake()
+    {
         houses = new List<House>();
         buyers = new List<Buyer>();
         buyersFactionLogic = new FactionLogic();
@@ -24,7 +26,8 @@ public class HouseController : MonoBehaviour {
 
     public void SpawnBuyer()
     {
-        if (houses.Count != 0 && buyers.Count < maxBuyers) {
+        if (houses.Count != 0 && buyers.Count < maxBuyers)
+        {
             System.Random random = new System.Random();
             int r = random.Next(houses.Count);
 
@@ -38,17 +41,20 @@ public class HouseController : MonoBehaviour {
             buyers.Add(deployedBuyer);
         }
 
-        Invoke("SpawnBuyer", Random.Range(2.0f, 6.0f));
+        Invoke("SpawnBuyer", Random.Range(1.0f, 3.0f));
     }
 
-    public void AddHouse(House house) {
+    public void AddHouse(House house)
+    {
         houses.Add(house);
     }
 
-    public List<House> GetPartyingHouses() {
+    public List<House> GetPartyingHouses()
+    {
         List<House> partyingHouses = new List<House>();
 
-        foreach (House house in houses) {
+        foreach (House house in houses)
+        {
             if (house.hasPerformingBand)
                 partyingHouses.Add(house);
         }
@@ -56,10 +62,12 @@ public class HouseController : MonoBehaviour {
         return partyingHouses;
     }
 
-    public List<House> GetPartyingHousesByGenre(FactionLogic.Genre genre) {
+    public List<House> GetPartyingHousesByGenre(FactionLogic.Genre genre)
+    {
         List<House> partyingHouses = new List<House>();
 
-        foreach (House house in houses) {
+        foreach (House house in houses)
+        {
             if (house.hasPerformingBand && house.genre == genre)
                 partyingHouses.Add(house);
         }
@@ -67,21 +75,25 @@ public class HouseController : MonoBehaviour {
         return partyingHouses;
     }
 
-    public List<Buyer> GetAimlessBuyers() {
+    public List<Buyer> GetAimlessBuyers()
+    {
         List<Buyer> aimlessBuyers = new List<Buyer>();
-        foreach (Buyer buyer in buyers) {
+        foreach (Buyer buyer in buyers)
+        {
             if (buyer.IsWalkingRandomly())
                 aimlessBuyers.Add(buyer);
         }
         return aimlessBuyers;
     }
-	
-	// Update is called once per frame
-	void Update () {
-        
+
+    // Update is called once per frame
+    void Update()
+    {
+
     }
 
-    private void AttemptToLureBuyer() {
+    private void AttemptToLureBuyer()
+    {
         List<House> partyingHouses = GetPartyingHouses();
         List<Buyer> targets = GetAimlessBuyers();
 
@@ -104,16 +116,18 @@ public class HouseController : MonoBehaviour {
             return;
         }
 
-        float ratioGenreHouses = ((float) partyingHousesByGenre.Count) / ((float) partyingHouses.Count);
+        float ratioGenreHouses = ((float)partyingHousesByGenre.Count) / ((float)partyingHouses.Count);
         float totalProbability = attraction * ratioGenreHouses;
 
-        if (Random.Range(0.0f, 1.0f) > totalProbability) {
+        if (Random.Range(0.0f, 1.0f) > totalProbability)
+        {
             int targetIndex = random.Next(targets.Count);
             targets[targetIndex].SetHouse(partyingHouses[houseIndex]);
-        }     
+        }
     }
 
-    public void DestinationReached(Buyer buyer) {
+    public void DestinationReached(Buyer buyer)
+    {
         buyers.Remove(buyer);
     }
 }

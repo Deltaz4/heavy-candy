@@ -2,26 +2,30 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PoliceStation : MonoBehaviour {
+public class PoliceStation : MonoBehaviour
+{
 
     public Police police;
     public PoliceController policeController;
     public Transform policeSpawnPoint;
 
-	// Use this for initialization
-	void Start () {
-       
-	}
-	
-	// Update is called once per frame
-	void Update () {
-        
-	}
+    // Use this for initialization
+    void Start()
+    {
 
-    public void DeployPoliceSquad(FactionLogic.Genre genre, House targetHouse) {
+    }
 
-        Police deployedSquad = (Police) Instantiate(police, 
-            policeSpawnPoint.position, 
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
+
+    public void DeployPoliceSquad(FactionLogic.Genre genre, House targetHouse)
+    {
+
+        Police deployedSquad = (Police)Instantiate(police,
+            policeSpawnPoint.position,
             policeSpawnPoint.rotation);
 
         deployedSquad.transform.parent = gameObject.transform;
@@ -29,7 +33,8 @@ public class PoliceStation : MonoBehaviour {
         deployedSquad.SetHouse(targetHouse);
     }
 
-    public void DestinationReached(FactionLogic.Genre genre, bool candyFound) {
+    public void DestinationReached(FactionLogic.Genre genre, bool candyFound)
+    {
         policeController.DestinationReached(genre, candyFound);
     }
 }

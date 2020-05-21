@@ -67,7 +67,7 @@ public class OnBuildingClicked : MonoBehaviour
         }
     }
 
-    public void OnCandyClick ()
+    public void OnCandyClick()
     {
         Debug.Log("button clicked!");
         Menu.SetActive(true);
@@ -90,7 +90,7 @@ public class OnBuildingClicked : MonoBehaviour
         }
     }
 
-    public void OnGigClick ()
+    public void OnGigClick()
     {
         Menu.SetActive(true);
         MouseClickedOnObject = true;
@@ -111,7 +111,7 @@ public class OnBuildingClicked : MonoBehaviour
         }
     }
 
-    public void OnCrossClick ()
+    public void OnCrossClick()
     {
         if (Menu.activeSelf)
         {

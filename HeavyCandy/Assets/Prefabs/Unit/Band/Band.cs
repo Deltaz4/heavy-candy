@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Band : Unit {
-    
+public class Band : Unit
+{
+
     public bool playing = false;
     [HideInInspector]
     public FactionLogic.Genre genre;
@@ -33,18 +34,24 @@ public class Band : Unit {
         unitSprite = sprite.GetComponent<UnitSprite>();
     }
 
-    private void Start() {
-        if (genre == FactionLogic.Genre.OPERA) {
+    private void Start()
+    {
+        if (genre == FactionLogic.Genre.OPERA)
+        {
             unitSprite.backLeft = operaBackLeft;
             unitSprite.backRight = operaBackRight;
             unitSprite.frontLeft = operaFrontLeft;
             unitSprite.frontRight = operaFrontRight;
-        } else if (genre == FactionLogic.Genre.METAL) {
+        }
+        else if (genre == FactionLogic.Genre.METAL)
+        {
             unitSprite.backLeft = metalBackLeft;
             unitSprite.backRight = metalBackRight;
             unitSprite.frontLeft = metalFrontLeft;
             unitSprite.frontRight = metalFrontRight;
-        } else if (genre == FactionLogic.Genre.HIP_HOP) {
+        }
+        else if (genre == FactionLogic.Genre.HIP_HOP)
+        {
             unitSprite.backLeft = hiphopBackLeft;
             unitSprite.backRight = hiphopBackRight;
             unitSprite.frontLeft = hiphopFrontLeft;
@@ -52,9 +59,10 @@ public class Band : Unit {
         }
     }
 
-    public void SetGenre(FactionLogic.Genre genre) {
+    public void SetGenre(FactionLogic.Genre genre)
+    {
         this.genre = genre;
-        
+
     }
 
     public void SetDestination(House house)
@@ -76,12 +84,14 @@ public class Band : Unit {
         SetDestination(house.transform.position);
     }
 
-    void Update () {
+    void Update()
+    {
         sprite.GetComponent<UnitSprite>().SetRotation(transform.rotation.eulerAngles.y);
-        if (!playing && AtDestination() && !house.hasPerformingBand) {
+        if (!playing && AtDestination() && !house.hasPerformingBand)
+        {
             StartPlaying();
         }
-	}
+    }
 
     void StartPlaying()
     {
@@ -90,12 +100,14 @@ public class Band : Unit {
         gameObject.SetActive(false);
     }
 
-    private FactionLogic.Genre RandomizeGenre() {
+    private FactionLogic.Genre RandomizeGenre()
+    {
         int i = Random.Range(0, 3);
-        if(i < 1) {
+        if (i < 1)
+        {
             return FactionLogic.Genre.HIP_HOP;
         }
-        else if(1 <= i && i < 2)
+        else if (1 <= i && i < 2)
         {
             return FactionLogic.Genre.METAL;
         }
@@ -105,7 +117,8 @@ public class Band : Unit {
         }
     }
 
-    public void StopPlaying() {
+    public void StopPlaying()
+    {
         if (playing)
         {
             playing = false;

@@ -2,33 +2,34 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class House : MonoBehaviour {
+public class House : MonoBehaviour
+{
 
     public bool hasPerformingBand;
     private Band playingBand;
     public FactionLogic.Genre genre;
     int candyCount;
 
-	public List<AudioClip> songList = new List<AudioClip>();
-	private AudioSource audio;
+    public List<AudioClip> songList = new List<AudioClip>();
+    private AudioSource audioSource;
 
-	Color colorStart = Color.red;
-	Color colorEnd = Color.green;
-	float colorDuration = 1.0f;
-	Renderer colorRend;
-	float colorSlowDown = 1.0f;
-	Color initialColor;
-	float initialColorDuration;
+    Color colorStart = Color.red;
+    Color colorEnd = Color.green;
+    float colorDuration = 1.0f;
+    Renderer colorRend;
+    float colorSlowDown = 1.0f;
+    Color initialColor;
+    float initialColorDuration;
 
-	private GameObject rippleA;
-	private GameObject rippleB;
+    private GameObject rippleA;
+    private GameObject rippleB;
 
-	public float vibPower = 0.7f; // Power of vibration
-	public float vibDuration = 1.0f; // Duration of vibration
-	public float vibSlowDown = 1.0f; // Set to 1 vibrate vibDuration seconds. Set to 0 to never stop vibrating
-	[SerializeField]
-	private bool shouldVib = false; // Should it vibrate
-	Vector3 initialPosition; // Position before vibration
+    public float vibPower = 0.7f; // Power of vibration
+    public float vibDuration = 1.0f; // Duration of vibration
+    public float vibSlowDown = 1.0f; // Set to 1 vibrate vibDuration seconds. Set to 0 to never stop vibrating
+    [SerializeField]
+    private bool shouldVib = false; // Should it vibrate
+    Vector3 initialPosition; // Position before vibration
     Vector3 basePosition;
     float initialVibDuration; // vibDuration value before vibrating
 
@@ -40,11 +41,12 @@ public class House : MonoBehaviour {
     private float initHeight = 1.0f;
     private float maxHeight = 10.0f;
 
-    void Start () {
+    void Start()
+    {
         hasPerformingBand = false;
         candyCount = 0;
 
-		audio = GetComponentInChildren<AudioSource>();
+        audioSource = GetComponentInChildren<AudioSource>();
 
         rippleA = (GameObject)transform.Find("RippleA").gameObject;
         rippleB = (GameObject)transform.Find("RippleB").gameObject;
@@ -52,30 +54,31 @@ public class House : MonoBehaviour {
         rippleB.SetActive(false);
 
         colorRend = GetComponent<Renderer>();
-		initialColor = colorRend.material.color;
-		colorSlowDown = vibSlowDown;
-		colorDuration = vibDuration;
-		initialColorDuration = colorDuration;
+        initialColor = colorRend.material.color;
+        colorSlowDown = vibSlowDown;
+        colorDuration = vibDuration;
+        initialColorDuration = colorDuration;
 
-		initialPosition = transform.localPosition;
+        initialPosition = transform.localPosition;
         basePosition = initialPosition;
         initialVibDuration = vibDuration;
 
         HouseController houseController = gameObject.GetComponentInParent<HouseController>();
         houseController.AddHouse(this);
-	}
+    }
 
-	void Update () {
-		if (Input.GetKeyDown(KeyCode.V))
-		{
-			shouldVib = true;
-		}
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            shouldVib = true;
+        }
 
-		if (shouldVib)
-		{
-			HouseColor();
-			Vibrate();
-		}
+        if (shouldVib)
+        {
+            HouseColor();
+            Vibrate();
+        }
 
         if (isSettingUp)
         {
@@ -110,11 +113,11 @@ public class House : MonoBehaviour {
             }
             scaleHeight();
         }
-	}
+    }
 
     private void scaleHeight()
     {
-        basePosition.y = initialPosition.y + riseHeight * tearTimeLeft / setupTime / 2.0f;
+        basePosition.y = initialPosition.y + riseHeight * tearTimeLeft / setupTime;
         transform.localPosition = basePosition;
         transform.localScale = new Vector3(transform.localScale.x, (maxHeight - initHeight) * tearTimeLeft / setupTime + initHeight, transform.localScale.z);
     }
@@ -125,20 +128,20 @@ public class House : MonoBehaviour {
         playingBand = band;
         isSettingUp = true;
         tearTimeLeft = 0.0f;
-		if (genre == FactionLogic.Genre.HIP_HOP)
-		{
-			audio.clip = songList[0];
-		}
-		else if (genre == FactionLogic.Genre.METAL)
-		{
-			audio.clip = songList[1];
-		}
-		else if (genre == FactionLogic.Genre.OPERA)
-		{
-			audio.clip = songList[2];
-		}
+        if (genre == FactionLogic.Genre.HIP_HOP)
+        {
+            audioSource.clip = songList[0];
+        }
+        else if (genre == FactionLogic.Genre.METAL)
+        {
+            audioSource.clip = songList[1];
+        }
+        else if (genre == FactionLogic.Genre.OPERA)
+        {
+            audioSource.clip = songList[2];
+        }
 
-		audio.Play();
+        audioSource.Play();
     }
 
     public void StopMusic()
@@ -149,54 +152,58 @@ public class House : MonoBehaviour {
             isTearingDown = true;
         }
 
-		audio.Stop();
+        audioSource.Stop();
     }
 
-    public void IncreaseCandyCount(int amount = 1) {
+    public void IncreaseCandyCount(int amount = 1)
+    {
         candyCount += amount;
     }
 
-    public void DecreaseCandyCount(int amount = 1) {
+    public void DecreaseCandyCount(int amount = 1)
+    {
         candyCount -= amount;
     }
 
-    public bool HasCandy() {
+    public bool HasCandy()
+    {
         return (candyCount != 0);
     }
 
-    public void ConfiscateCandy() {
+    public void ConfiscateCandy()
+    {
         candyCount = 0;
     }
 
-	void HouseColor()
-	{
-		if (colorDuration > 0)
-		{
-			float colorLerp = Mathf.PingPong(Time.time, colorDuration) / colorDuration;
-			colorRend.material.color = Color.Lerp(colorStart, colorEnd, colorLerp);
-			colorDuration -= Time.deltaTime * colorSlowDown;
-		}
-		else
-		{
-			colorDuration = initialColorDuration;
-			colorRend.material.color = initialColor;
-		}
-	}
+    void HouseColor()
+    {
+        if (colorDuration > 0)
+        {
+            float colorLerp = Mathf.PingPong(Time.time, colorDuration) / colorDuration;
+            colorRend.material.color = Color.Lerp(colorStart, colorEnd, colorLerp);
+            colorDuration -= Time.deltaTime * colorSlowDown;
+        }
+        else
+        {
+            colorDuration = initialColorDuration;
+            colorRend.material.color = initialColor;
+        }
+    }
 
-	void Vibrate () // Vibration
-	{
-		if (shouldVib)
-		{
-			if (vibDuration > 0)
-			{
+    void Vibrate() // Vibration
+    {
+        if (shouldVib)
+        {
+            if (vibDuration > 0)
+            {
                 transform.localPosition = basePosition + Random.insideUnitSphere * vibPower;
-				vibDuration -= Time.deltaTime * vibSlowDown;
-			}
-			else
-			{
-				vibDuration = initialVibDuration;
+                vibDuration -= Time.deltaTime * vibSlowDown;
+            }
+            else
+            {
+                vibDuration = initialVibDuration;
                 transform.localPosition = basePosition;
-			}
-		}
-	}
+            }
+        }
+    }
 }
